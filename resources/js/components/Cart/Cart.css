@@ -1,0 +1,38 @@
+.cart-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #dddddd;
+    border-radius: 50px;
+    height: 7rem;
+    margin: 7px;
+    padding: 10px;
+}
+
+.cart-delete{
+    display: flex;
+    align-items: center;
+}
+
+.summary{
+    height: auto;
+    max-height: 100%;
+}
+
+.cart-total{
+    text-align: end;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-right: 10px;
+}
+
+input[type=number]{
+    text-align: center;
+    background-color: #fff;
+    width: 5rem;
+}
+
+.alert-success{
+    width: auto;
+}

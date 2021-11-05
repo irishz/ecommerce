@@ -1,0 +1,10 @@
+.product-card{
+    width: 12rem;
+    margin-bottom: 2;
+}
+
+.alert-success{
+    width: 25%;
+    margin-right: 0;
+    margin-left: auto;
+}

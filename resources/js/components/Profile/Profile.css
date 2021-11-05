@@ -1,0 +1,31 @@
+.header{
+    display: flex;
+}
+
+.title{
+    color: #1768ff;
+    font-weight: bold;
+    margin-left: 7px;
+}
+
+.topic{
+    padding: 5px;
+    border-bottom:1px solid gray ;
+}
+
+.btn-section{
+    margin-top: 10px;
+}
+
+input.form-control{
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+
+button{
+    margin: 3px;
+}
+
+.input-title{
+    font-size: 14px;
+}
