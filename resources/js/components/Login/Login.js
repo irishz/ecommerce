@@ -13,12 +13,12 @@ import { Redirect } from "react-router-dom";
 import "./Login.css";
 
 function Login(props) {
-    const [email, setemail] = useState("");
+    const [employee_code, setemployeeCode] = useState("");
     const [password, setpassword] = useState("");
     const [redirect, setredirect] = useState(false);
 
-    function onEmailChange(e) {
-        setemail(e.target.value);
+    function onEmployeeCodeChange(e) {
+        setemployeeCode(e.target.value);
     }
 
     function onPasswordChange(e) {
@@ -29,7 +29,7 @@ function Login(props) {
         e.preventDefault();
 
         let data = JSON.stringify({
-            email,
+            employee_code,
             password,
         });
 
@@ -40,7 +40,7 @@ function Login(props) {
                 withCredentials: true,
             })
             .then((res) => {
-                props.setuserName(res.data.user.name);
+                props.setuserName(res.data.user.first_name);
             });
 
         setredirect(true);
@@ -67,14 +67,14 @@ function Login(props) {
                                     <Form>
                                         <Form.Group className="mb-3">
                                             <Form.Label>
-                                                Email address
+                                                Employee Code
                                             </Form.Label>
                                             <Form.Control
                                                 className="login"
-                                                type="email"
-                                                placeholder="Enter email"
+                                                type="text"
+                                                placeholder="Enter Employee Code"
                                                 onChange={(e) =>
-                                                    onEmailChange(e)
+                                                    onEmployeeCodeChange(e)
                                                 }
                                                 required
                                                 autoFocus

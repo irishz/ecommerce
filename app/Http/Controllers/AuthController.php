@@ -37,9 +37,9 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('employee_code', 'password'))) {
             return response([
-                'message' => 'Invalid Credentials!'
+                'message' => 'EmployeeCode or Password Invalid!'
             ], Response::HTTP_UNAUTHORIZED);
         }
 
