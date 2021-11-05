@@ -14,6 +14,7 @@ import "./Profile.css";
 import { useHistory } from "react-router";
 import axios from "axios";
 import DeptContext from "../Context/DeptContext";
+import ResetPassword from "./ResetPassword";
 
 function Profile() {
     const userId = useContext(AuthContext);
@@ -23,10 +24,13 @@ function Profile() {
 
     const [userData, setuserData] = useState([]);
     const [alertUpdate, setalertUpdate] = useState("");
+    const [modalVisible, setmodalVisible] = useState(false);
+    const [curr_password, setcurr_password] = useState("");
 
     useEffect(async () => {
         await axios.get("/api/user").then((res) => {
             // console.log(res.data);
+            setcurr_password(res.data.password);
             setuserData(res.data);
         });
     }, [userId]);
@@ -41,16 +45,20 @@ function Profile() {
             last_name: userData.last_name,
             email: userData.email,
             department: userData.department,
-            is_admin: 0
+            is_admin: 0,
         };
 
         axios.put("/api/user/update", profile_obj).then((res) => {
-            console.log(res.data.message);
+            // console.log(res.data.message);
             setalertUpdate(res.data.message);
             setTimeout(() => {
                 setalertUpdate("");
             }, 3000);
         });
+    }
+
+    function handleResetPswd() {
+        setmodalVisible(true);
     }
 
     return (
@@ -67,7 +75,9 @@ function Profile() {
                     <Form>
                         <Row>
                             <Col>
-                                <label className="input-title">Employee Code</label>
+                                <label className="input-title">
+                                    Employee Code
+                                </label>
                                 <Form.Control
                                     maxLength={7}
                                     defaultValue={userData.employee_code}
@@ -80,7 +90,9 @@ function Profile() {
                         </Row>
                         <Row>
                             <Col>
-                                <label className="input-title">First Name</label>
+                                <label className="input-title">
+                                    First Name
+                                </label>
                                 <Form.Control
                                     defaultValue={userData.first_name}
                                     onChange={(e) =>
@@ -111,7 +123,9 @@ function Profile() {
                         </Row>
                         <Row>
                             <Col>
-                                <label className="input-title">Department</label>
+                                <label className="input-title">
+                                    Department
+                                </label>
                                 <Form.Select
                                     defaultValue={userData.department}
                                     onChange={(e) =>
@@ -140,6 +154,16 @@ function Profile() {
                                 >
                                     Cancel
                                 </Button>
+                            </Col>
+                            <Col>
+                                <Button onClick={() => handleResetPswd()}>
+                                    Reset Password
+                                </Button>
+                                <ResetPassword
+                                    modalVisible={modalVisible}
+                                    setmodalVisible={setmodalVisible}
+                                    user_id={userData.id}
+                                />
                             </Col>
                         </Row>
                     </Form>

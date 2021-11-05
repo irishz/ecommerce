@@ -81,4 +81,17 @@ class AuthController extends Controller
             'message' => 'Update profile successfully.'
         ]);
     }
+
+    public function resetPassword(Request $request)
+    {
+        $user = User::find($request->id);
+
+        
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Reset password successfully'
+        ]);
+    }
 }

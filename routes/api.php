@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('user-all', [AuthController::class, 'userAll']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::put('user/update', [AuthController::class, 'update']);
+    Route::put('user/reset-password', [AuthController::class, 'resetPassword']);
 
     //Cart
     Route::get('getcart', [CartController::class, 'getUserCart']);
