@@ -1,9 +1,20 @@
-.product-card{
-    width: 12rem;
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 240px;
     margin-bottom: 2;
 }
 
-.alert-success{
+.prod-description {
+    font-size: small;
+}
+
+.card-text {
+    margin-bottom: 3px;
+}
+
+.alert-success {
     width: 25%;
     margin-right: 0;
     margin-left: auto;

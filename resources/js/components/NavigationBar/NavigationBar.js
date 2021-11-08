@@ -35,45 +35,61 @@ function NavigationBar(props) {
     }
 
     return (
-        <Navbar bg="primary" variant="dark" className="mb-5">
+        <Navbar
+            bg="primary"
+            variant="dark"
+            className="mb-5"
+            collapseOnSelect
+            expand="lg"
+        >
             <Container>
                 <Navbar.Brand href="/shop">IIT E-Commerce</Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link href="/shop">Home</Nav.Link>
-                    <Nav.Link href="/shop/product">Product</Nav.Link>
-                </Nav>
-                {props.username ? (
-                    <Nav>
-                        <Nav.Link href="/shop/cart">
-                            Cart{" "}
-                            {cartCount > 0 ? (
-                                <Badge bg="danger">{cartCount}</Badge>
-                            ) : null}
-                        </Nav.Link>
-                        <NavDropdown title={props.username} className="mr-auto" align="end">
-                            <NavDropdown.Item href="/shop/profile">
-                                <BsFillPersonFill />
-                                <label>Profile</label>
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/shop/order">
-                                <BsFillBagFill />
-                                <label>My Order</label>
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#shop/setting">
-                                <BsFillGearFill /> <label>Setting</label>
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={() => onLogout()}>
-                                <IoLogOutSharp size={16} color="#dc3545"/> <label style={{ color: '#dc3545' }}>Logout</label>
-                            </NavDropdown.Item>
-                        </NavDropdown>
+                <Navbar.Toggle />
+                <Navbar.Collapse>
+                    <Nav className="me-auto">
+                        <Nav.Link href="/shop">Home</Nav.Link>
+                        <Nav.Link href="/shop/product">Product</Nav.Link>
                     </Nav>
-                ) : (
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/shop/login">Login</Nav.Link>
-                        {/* <Nav.Link href="/shop/register">Register</Nav.Link> */}
-                    </Nav>
-                )}
+                    {props.username ? (
+                        <Nav>
+                            <Nav.Link href="/shop/cart">
+                                Cart{" "}
+                                {cartCount > 0 ? (
+                                    <Badge bg="danger">{cartCount}</Badge>
+                                ) : null}
+                            </Nav.Link>
+                            <NavDropdown
+                                title={props.username}
+                                className="mr-auto"
+                                align="end"
+                            >
+                                <NavDropdown.Item href="/shop/profile">
+                                    <BsFillPersonFill />
+                                    <label>Profile</label>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="/shop/order">
+                                    <BsFillBagFill />
+                                    <label>My Order</label>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="#shop/setting">
+                                    <BsFillGearFill /> <label>Setting</label>
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={() => onLogout()}>
+                                    <IoLogOutSharp size={16} color="#dc3545" />{" "}
+                                    <label style={{ color: "#dc3545" }}>
+                                        Logout
+                                    </label>
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                    ) : (
+                        <Nav className="mr-auto">
+                            <Nav.Link href="/shop/login">Login</Nav.Link>
+                            {/* <Nav.Link href="/shop/register">Register</Nav.Link> */}
+                        </Nav>
+                    )}
+                </Navbar.Collapse>
             </Container>
         </Navbar>
     );
