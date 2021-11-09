@@ -93,15 +93,17 @@ function Product() {
             </ButtonGroup>
             <Row>
                 {prodList.map((prod, idx) => (
-                    <Col lg={2} md={4} sm={6} xs={12} key={idx}>
+                    <Col lg={2} md={3} sm={4} xs={6} key={idx}>
                         <Card className="product-card mb-2">
                             <Card.Img
                                 variant="top"
-                                src='/public/storage/products/103/ปลาทูหอม 400 กรัม.jpg'
+                                src="/public/storage/products/103/ปลาทูหอม 400 กรัม.jpg"
                             />
-                            <Card.Body>
-                                <Card.Title>{prod.name}</Card.Title>
-                                <Card.Text className="prod-description">{prod.description}</Card.Text>
+                            <Card.Body style={{ display: "block" }}>
+                                <Card.Title className="prod-title">{prod.name}</Card.Title>
+                                <Card.Text className="prod-description">
+                                    {prod.description}
+                                </Card.Text>
                                 <Card.Text>
                                     <strong>
                                         {prod.price}

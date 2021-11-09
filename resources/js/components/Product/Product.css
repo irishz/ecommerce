@@ -10,8 +10,16 @@
     font-size: small;
 }
 
+.prod-title {
+    font-size: large;
+    margin-bottom: 1px;
+}
+
 .card-text {
     margin-bottom: 3px;
+}
+.card-body {
+    padding: 0.5rem;
 }
 
 .alert-success {
