@@ -11,6 +11,9 @@ import {
     Spinner,
     Alert,
 } from "react-bootstrap";
+import { GiShoppingBag } from "react-icons/gi";
+import { BsCheckSquareFill, BsCashCoin } from "react-icons/bs";
+import { FaHandHoldingHeart } from "react-icons/fa";
 
 function AdminOrder() {
     const [orderList, setorderList] = useState([]);
@@ -88,14 +91,38 @@ function AdminOrder() {
                                 }}
                             >
                                 <Card.Body>
-                                    <h6>{stat}</h6>
-                                    <p>
-                                        {
-                                            orderList.filter(
-                                                (order) => order.status === stat
-                                            ).length
-                                        }
-                                    </p>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                            margin: 10,
+                                        }}
+                                    >
+                                        <div>
+                                            <h6>{stat}</h6>
+                                            <p>
+                                                {
+                                                    orderList.filter(
+                                                        (order) =>
+                                                            order.status ===
+                                                            stat
+                                                    ).length
+                                                }
+                                            </p>
+                                        </div>
+                                        <div style={{ alignContent: "end" }}>
+                                            {stat === "Ordered" ? (
+                                                <GiShoppingBag size={28} />
+                                            ) : stat === "Confirmed" ? (
+                                                <BsCheckSquareFill size={26} />
+                                            ) : stat === "Paymented" ? (
+                                                <BsCashCoin size={30} />
+                                            ) : (
+                                                <FaHandHoldingHeart size={30} />
+                                            )}
+                                        </div>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>

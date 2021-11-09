@@ -1,14 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {
-    Form,
-    Button,
-    FloatingLabel,
-    Alert,
-    Container,
-    Row,
-    Col,
-} from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import "./Login.css";
 
@@ -16,6 +8,7 @@ function Login(props) {
     const [employee_code, setemployeeCode] = useState("");
     const [password, setpassword] = useState("");
     const [redirect, setredirect] = useState(false);
+    const [errMessage, seterrMessage] = useState("");
 
     function onEmployeeCodeChange(e) {
         setemployeeCode(e.target.value);
@@ -40,10 +33,18 @@ function Login(props) {
                 withCredentials: true,
             })
             .then((res) => {
+                setredirect(true);
                 props.setuserName(res.data.user.first_name);
+            })
+            .catch((err) => {
+                console.log(err.toJSON().message);
+                if (
+                    (err.toJSON().message =
+                        "Request failed with status code 401")
+                ) {
+                    seterrMessage("Employee code or password invalid!");
+                }
             });
-
-        setredirect(true);
     }
 
     if (redirect) {
@@ -95,6 +96,11 @@ function Login(props) {
                                                 }
                                                 required
                                             />
+                                            <Form.Text
+                                                style={{ color: "tomato" }}
+                                            >
+                                                {errMessage}
+                                            </Form.Text>
                                         </Form.Group>
                                         {/* <Form.Group
                                             className="mb-3"

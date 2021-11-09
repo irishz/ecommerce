@@ -12,6 +12,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { MdDashboard } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { BsFillFileEarmarkPersonFill } from "react-icons/bs";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaThList } from "react-icons/fa";
 import { Link, Redirect } from "react-router-dom";
 

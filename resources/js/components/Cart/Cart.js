@@ -78,17 +78,19 @@ function Cart() {
 
     if (cartList.length < 1) {
         return (
-            <div style={{ display: 'flex',justifyContent: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
                 <Alert
                     variant="info"
                     style={{ width: "30%", textAlign: "center" }}
                 >
-                    <strong>Your cart is empty! <Link to="/shop/product">Go to shopping now.</Link></strong>
+                    <strong>
+                        Your cart is empty!{" "}
+                        <Link to="/shop/product">Go to shopping now.</Link>
+                    </strong>
                 </Alert>
             </div>
         );
     }
-
 
     return (
         <Container>
@@ -104,7 +106,10 @@ function Cart() {
             ) : null}
             {alertCreateOrder ? (
                 <Alert variant="success" dismissible className="alert-success">
-                    <strong>{alertCreateOrder} <Link to="/shop/order">View your orders.</Link></strong>
+                    <strong>
+                        {alertCreateOrder}{" "}
+                        <Link to="/shop/order">View your orders.</Link>
+                    </strong>
                 </Alert>
             ) : null}
             <Row>
@@ -121,7 +126,16 @@ function Cart() {
                                             }}
                                         >
                                             <Figure>
-                                                <Figure.Image src="https://picsum.photos/100/75"></Figure.Image>
+                                                <Figure.Image
+                                                    width={85}
+                                                    src={
+                                                        "/products/" +
+                                                        cart.product.id +
+                                                        "/" +
+                                                        cart.product.name +
+                                                        ".jpg"
+                                                    }
+                                                ></Figure.Image>
                                             </Figure>
                                         </Col>
                                         <Col>{cart.product.name}</Col>
