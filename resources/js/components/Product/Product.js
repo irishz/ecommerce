@@ -97,10 +97,18 @@ function Product() {
                         <Card className="product-card mb-2">
                             <Card.Img
                                 variant="top"
-                                src="/public/storage/products/103/ปลาทูหอม 400 กรัม.jpg"
+                                src={
+                                    "http://192.168.2.13:7000/products/" +
+                                    prod.id +
+                                    "/" +
+                                    prod.name +
+                                    ".jpg"
+                                }
                             />
                             <Card.Body style={{ display: "block" }}>
-                                <Card.Title className="prod-title">{prod.name}</Card.Title>
+                                <Card.Title className="prod-title">
+                                    {prod.name}
+                                </Card.Title>
                                 <Card.Text className="prod-description">
                                     {prod.description}
                                 </Card.Text>
