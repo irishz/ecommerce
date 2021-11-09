@@ -98,7 +98,7 @@ function Product() {
                             <Card.Img
                                 variant="top"
                                 src={
-                                    "http://192.168.2.13:7000/products/" +
+                                    "/products/" +
                                     prod.id +
                                     "/" +
                                     prod.name +
