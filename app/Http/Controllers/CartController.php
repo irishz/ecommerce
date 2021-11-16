@@ -55,7 +55,7 @@ class CartController extends Controller
             $carts->save();
         }
 
-        return response()->json(['message' => 'Added to cart successfully!']);
+        return response()->json(['message' => 'เพิ่มใส่รถเข็นสำเร็จ!']);
     }
 
     /**
@@ -103,7 +103,7 @@ class CartController extends Controller
             
 
         return response()->json([
-            'message' => 'Update cart successfully.'
+            'message' => 'อัพเดทรายการในรถเข็นสำเร็จ.'
         ]);
     }
 
@@ -120,7 +120,7 @@ class CartController extends Controller
         // Cart::find($cart);
 
         return response()->json([
-            'message' => "Delete Successfully"
+            'message' => "ลบรายการสำเร็จ"
         ]);
     }
 }

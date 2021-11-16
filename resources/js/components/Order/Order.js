@@ -5,6 +5,7 @@ import AuthContext from "../Context/AuthContext";
 import "./Order.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { AiFillEye } from "react-icons/ai";
 
 function Order() {
     const userId = useContext(AuthContext);
@@ -23,11 +24,11 @@ function Order() {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>OrderID</th>
-                        <th>Total</th>
-                        <th>CreateDate</th>
-                        <th>Status</th>
-                        <th>Detail</th>
+                        <th>เลขคำสั่งซื้อ</th>
+                        <th>ยอดรวม</th>
+                        <th>วันที่สั่งซื้อ</th>
+                        <th>สถานะ</th>
+                        <th>รายละเอียด</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +36,7 @@ function Order() {
                         .sort((a, b) => b.created_at - a.created_at)
                         .map((order, idx) => (
                             <tr key={idx}>
-                                <td>{order.id}</td>
+                                <td>{"#" + order.id}</td>
                                 <td>{order.total}</td>
                                 <td>
                                     {moment(order.created_at)
@@ -56,7 +57,7 @@ function Order() {
                                         }}
                                     >
                                         <Button variant="primary" size="sm">
-                                            View
+                                            <AiFillEye /> ดูรายละเอียด
                                         </Button>
                                     </Link>
                                 </td>

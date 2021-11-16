@@ -42,7 +42,20 @@ class OrderProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+    }
+
+    public function updateOrderProdStatus(Request $request)
+    {
+        $order_prods = $request->all();
+        
+        foreach ($order_prods as $key => $order_prod) {
+            OrderProduct::where('id', $order_prod['id'])->update(['status' => $order_prod['status']]);
+        }
+
+        return response()->json([
+            'message' => 'อัพเดทข้อมูลสำเร็จ'
+        ]);
     }
 
     /**

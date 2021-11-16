@@ -84,8 +84,8 @@ function Cart() {
                     style={{ width: "30%", textAlign: "center" }}
                 >
                     <strong>
-                        Your cart is empty!{" "}
-                        <Link to="/shop/product">Go to shopping now.</Link>
+                        ไม่พบสินค้าในรถเข็น!{" "}
+                        <Link to="/shop/product">ไปช็อปเลย!</Link>
                     </strong>
                 </Alert>
             </div>
@@ -156,7 +156,7 @@ function Cart() {
                                                 </Button> */}
                                             <Form>
                                                 <Form.Control
-                                                    className="cart"
+                                                    className="cart-qty"
                                                     type="number"
                                                     min={1}
                                                     defaultValue={cart.qty}
@@ -203,9 +203,9 @@ function Cart() {
                             <Table>
                                 <thead>
                                     <tr>
-                                        <th>Order</th>
+                                        <th>ชื่อสินค้า</th>
                                         <th></th>
-                                        <th>Total</th>
+                                        <th>ทั้งหมด</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -224,7 +224,7 @@ function Cart() {
                                             </td>
                                             <td></td>
                                             <td>
-                                                {cart.qty * cart.price}
+                                                {cart.qty * cart.price}{" "}
                                                 {cfg.currency_symbol}
                                             </td>
                                         </tr>
@@ -232,12 +232,13 @@ function Cart() {
                                 </tbody>
                             </Table>
                             <Card.Text className="cart-total">
-                                Total:{" "}
+                                รวมทั้งหมด:{" "}
                                 <label className="ml-5">
                                     {cartList.reduce(
                                         (a, b) => (a = a + b.price * b.qty),
                                         0
                                     )}
+                                    {" "}
                                     {cfg.currency_symbol}
                                 </label>
                             </Card.Text>
@@ -249,7 +250,7 @@ function Cart() {
                                         onClick={() => onCartSave()}
                                         disabled={btnSaveDisable}
                                     >
-                                        Save
+                                        บันทึก
                                     </Button>
                                 </Col>
                                 <Col className="d-grid gap-2">
@@ -258,7 +259,7 @@ function Cart() {
                                         variant="primary"
                                         onClick={() => onCheckout()}
                                     >
-                                        CheckOut
+                                        สั่งสินค้า
                                     </Button>
                                 </Col>
                             </Row>

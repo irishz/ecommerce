@@ -13,11 +13,10 @@ import {
 } from "react-bootstrap";
 import { GiShoppingBag } from "react-icons/gi";
 import { BsCheckSquareFill, BsCashCoin } from "react-icons/bs";
-import { FaHandHoldingHeart } from "react-icons/fa";
 
 function AdminOrder() {
     const [orderList, setorderList] = useState([]);
-    const [orderStatus, setorderStatus] = useState("Ordered");
+    const [orderStatus, setorderStatus] = useState("สั่งซื้อ");
     const [orderMonthList, setorderMonthList] = useState([]);
     const [startDate, setstartDate] = useState(moment().format("YYYY-MM-DD"));
     const [endDate, setendDate] = useState(
@@ -62,7 +61,7 @@ function AdminOrder() {
         console.log(updateList);
 
         axios
-            .put("/api/order/status", { id: updateList, status: "Confirmed" })
+            .put("/api/order/status", { id: updateList, status: "ยืนยัน" })
             .then((res) => {
                 setisbtnLoading(false);
                 setalertUpdate(res.data.message);
@@ -79,55 +78,50 @@ function AdminOrder() {
             <h4>Admin Order Page</h4>
 
             <Row style={{ marginTop: 15, justifyContent: "space-between" }}>
-                {["Ordered", "Confirmed", "Paymented", "Received"].map(
-                    (stat, idx) => (
-                        <Col key={idx} lg={3}>
-                            <Card
-                                style={{
-                                    backgroundColor: "#FF5733",
-                                    color: "white",
-                                    fontWeight: "bold",
-                                    marginInline: 10,
-                                }}
-                            >
-                                <Card.Body>
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "center",
-                                            margin: 10,
-                                        }}
-                                    >
-                                        <div>
-                                            <h6>{stat}</h6>
-                                            <p>
-                                                {
-                                                    orderList.filter(
-                                                        (order) =>
-                                                            order.status ===
-                                                            stat
-                                                    ).length
-                                                }
-                                            </p>
-                                        </div>
-                                        <div style={{ alignContent: "end" }}>
-                                            {stat === "Ordered" ? (
-                                                <GiShoppingBag size={28} />
-                                            ) : stat === "Confirmed" ? (
-                                                <BsCheckSquareFill size={26} />
-                                            ) : stat === "Paymented" ? (
-                                                <BsCashCoin size={30} />
-                                            ) : (
-                                                <FaHandHoldingHeart size={30} />
-                                            )}
-                                        </div>
+                {["สั่งซื้อ", "ยืนยัน", "ชำระเงิน"].map((stat, idx) => (
+                    <Col key={idx} lg={3}>
+                        <Card
+                            style={{
+                                backgroundColor: "#FF5733",
+                                color: "white",
+                                fontWeight: "bold",
+                                marginInline: 10,
+                            }}
+                        >
+                            <Card.Body>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        margin: 10,
+                                    }}
+                                >
+                                    <div>
+                                        <h6>{stat}</h6>
+                                        <p>
+                                            {
+                                                orderList.filter(
+                                                    (order) =>
+                                                        order.status === stat
+                                                ).length
+                                            }
+                                        </p>
                                     </div>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    )
-                )}
+                                    <div style={{ alignContent: "end" }}>
+                                        {stat === "สั่งซื้อ" ? (
+                                            <GiShoppingBag size={28} />
+                                        ) : stat === "ยืนยัน" ? (
+                                            <BsCheckSquareFill size={26} />
+                                        ) : (
+                                            <BsCashCoin size={30} />
+                                        )}
+                                    </div>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
             </Row>
 
             <Row style={{ marginTop: 15 }}>
@@ -159,10 +153,9 @@ function AdminOrder() {
                             onChange={(e) => setorderStatus(e.target.value)}
                         >
                             {[
-                                "Ordered",
-                                "Confirmed",
-                                "Paymented",
-                                "Received",
+                                "สั่งซื้อ",
+                                "ยืนยัน",
+                                "ชำระเงิน",
                             ].map((stat, idx) => (
                                 <option key={idx} value={stat}>
                                     {stat}
@@ -248,7 +241,7 @@ function AdminOrder() {
                             </Table>
                         </div>
                     ) : (
-                        <p>Not found any data.</p>
+                        <p>ไม่พบข้อมูล.</p>
                     )}
                 </Col>
             </Row>

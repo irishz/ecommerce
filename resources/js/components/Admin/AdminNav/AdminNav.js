@@ -12,7 +12,6 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { MdDashboard } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { BsFillFileEarmarkPersonFill } from "react-icons/bs";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaThList } from "react-icons/fa";
 import { Link, Redirect } from "react-router-dom";
 
@@ -39,7 +38,10 @@ function AdminNav(props) {
         <ProSidebar style={{ height: "100vh" }} collapsed={toggleSwitch}>
             <SidebarHeader>
                 <Menu iconShape="round">
-                    <MenuItem icon={<MdDashboard />}>
+                    <MenuItem
+                        icon={<MdDashboard />}
+                        onClick={() => onToggleClick()}
+                    >
                         DashBoard <Link to="/admin" />
                     </MenuItem>
                 </Menu>
@@ -51,10 +53,11 @@ function AdminNav(props) {
                             Order <Link to="/admin/order" />
                         </MenuItem>
                         <MenuItem>
-                            Order Payment <Link to="/admin/order-payment" />
+                            Order Detail
+                            <Link to="/admin/order-detail" />
                         </MenuItem>
                         <MenuItem>
-                            Order Issue <Link to="/admin/order-issue" />
+                            Order Payment <Link to="/admin/order-payment" />
                         </MenuItem>
                     </SubMenu>
                     <MenuItem icon={<FaThList />}>

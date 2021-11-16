@@ -35,7 +35,15 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $invoice = Invoice::order()->create([
+            'order_id' => $request->id
+        ]);
+
+        $orderitems = OrderProduct::where('id', $request->id);
+        
+        return $response()->$json([
+            'message' => 'สร้างใบเสร็จเรียบร้อย'
+        ]);
     }
 
     /**

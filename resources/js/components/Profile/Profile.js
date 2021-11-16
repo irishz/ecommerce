@@ -65,18 +65,18 @@ function Profile() {
         <Container>
             <div className="header">
                 <BsFillFileEarmarkPersonFill size={32} color="#1768ff" />
-                <h2 className="title">Profile</h2>
+                <h2 className="title">ข้อมูลส่วนตัว</h2>
             </div>
 
             <Card>
                 <Card.Body>
-                    <h5 className="topic">Personal Data</h5>
+                    <h5 className="topic">รายละเอียดข้อมูลส่วนตัว</h5>
 
                     <Form>
                         <Row>
                             <Col>
                                 <label className="input-title">
-                                    Employee Code
+                                    รหัสพนักงาน
                                 </label>
                                 <Form.Control
                                     maxLength={7}
@@ -91,7 +91,7 @@ function Profile() {
                         <Row>
                             <Col>
                                 <label className="input-title">
-                                    First Name
+                                    ชื่อจริง
                                 </label>
                                 <Form.Control
                                     defaultValue={userData.first_name}
@@ -101,7 +101,7 @@ function Profile() {
                                 />
                             </Col>
                             <Col>
-                                <label className="input-title">Last Name</label>
+                                <label className="input-title">นามสกุล</label>
                                 <Form.Control
                                     defaultValue={userData.last_name}
                                     onChange={(e) =>
@@ -112,7 +112,7 @@ function Profile() {
                         </Row>
                         <Row>
                             <Col>
-                                <label className="input-title">Email</label>
+                                <label className="input-title">อีเมล</label>
                                 <Form.Control
                                     defaultValue={userData.email}
                                     onChange={(e) =>
@@ -124,7 +124,7 @@ function Profile() {
                         <Row>
                             <Col>
                                 <label className="input-title">
-                                    Department
+                                    แผนก
                                 </label>
                                 <Form.Select
                                     defaultValue={userData.department}
@@ -146,18 +146,18 @@ function Profile() {
                                     type="submit"
                                     onClick={(e) => onSave(e)}
                                 >
-                                    Save
+                                    บันทึก
                                 </Button>
                                 <Button
                                     variant="danger"
                                     onClick={() => history.goBack()}
                                 >
-                                    Cancel
+                                    ยกเลิก
                                 </Button>
                             </Col>
                             <Col>
                                 <Button onClick={() => handleResetPswd()}>
-                                    Reset Password
+                                    เปลี่ยนรหัสผ่าน
                                 </Button>
                                 <ResetPassword
                                     modalVisible={modalVisible}

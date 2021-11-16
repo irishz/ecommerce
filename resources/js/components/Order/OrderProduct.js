@@ -1,7 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Table, Button } from "react-bootstrap";
+import { Container, Table, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ConfigContext from "../Context/ConfigContext";
 import "./Order.css";
@@ -29,20 +29,17 @@ function OrderProduct(props) {
 
         if (props.location.state.status) {
             switch (props.location.state.status) {
-                case "Cancelled":
+                case "ยกเลิก":
                     setorderStatus(0);
                     break;
-                case "Ordered":
+                case "สั่งซื้อ":
                     setorderStatus(1);
                     break;
-                case "Confirmed":
+                case "ยืนยัน":
                     setorderStatus(2);
                     break;
-                case "Paymented":
+                case "ชำระเงิน":
                     setorderStatus(3);
-                    break;
-                case "Received":
-                    setorderStatus(4);
                     break;
                 default:
                     setorderStatus(5);
@@ -55,7 +52,7 @@ function OrderProduct(props) {
         <Container>
             {/* Stepper */}
             <div className="stepper">
-                {["Ordered", "Confirmed", "Paymented", "Received"].map((item, idx) => (
+                {["สั่งซื้อ", "ยืนยัน", "ชำระเงิน"].map((item, idx) => (
                     <div className="stepper-content">
                         <div
                             className={
@@ -79,43 +76,56 @@ function OrderProduct(props) {
                 ))}
             </div>
 
+            <Row>
+                <Col>
+                    <p>
+                        <strong>หมายเลขคำสั่งซื้อ : </strong>
+                        {"#" + orderId}
+                    </p>
+                </Col>
+            </Row>
+
             <Table striped bordered hover sm>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Total</th>
+                        <th>รหัสสินค้า</th>
+                        <th>สินค้า</th>
+                        <th>ราคา</th>
+                        <th>ทั้งหมด</th>
+                        <th>สถานะ</th>
                     </tr>
                 </thead>
                 <tbody>
                     {orderProdList.map((order, idx) => (
                         <tr key={idx}>
-                            <td>{idx + 1}</td>
+                            <td>{order.product.product_code}</td>
                             <td>
                                 {order.product.name} x{order.qty}
                             </td>
                             <td>{order.product.price}</td>
                             <td>{order.qty * order.product.price}</td>
+                            <td>{order.status}</td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
             <div className="order-total">
                 <label>
-                    <strong>Created At: </strong>{" "}
-                    {moment(props.location.state.createdAt).format("LLL")}
+                    <strong>วันที่สั่งซื้อ: </strong>{" "}
+                    {moment(props.location.state.createdAt)
+                        .locale("th")
+                        .format("LLL")}
                 </label>
                 <label>
                     <strong>
-                        Total: {props.location.state.total}
+                        รวมทั้งหมด: {props.location.state.total}{" "}
                         {cfg.currency_symbol}
                     </strong>
                 </label>
             </div>
             <div className="backto-order">
                 <Link to="/shop/order">
-                    <Button variant="primary">Back to MyOrder</Button>
+                    <Button variant="primary">กลับสู่หน้าคำสั่งซื้อ</Button>
                 </Link>
             </div>
         </Container>

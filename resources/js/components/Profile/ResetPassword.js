@@ -39,20 +39,20 @@ function ResetPassword(props) {
     return (
         <Modal show={props.modalVisible}>
             <Modal.Header>
-                <Modal.Title>Reset Password</Modal.Title>
+                <Modal.Title>เปลี่ยนรหัสผ่าน</Modal.Title>
             </Modal.Header>
             <Modal.Body className="pd-5">
                 <Container>
                     <Form>
                         <Form.Group as={Row}>
-                            <Form.Label column>New Password:</Form.Label>
+                            <Form.Label column>รหัสผ่านใหม่:</Form.Label>
                             <Form.Control
                                 type="password"
                                 onChange={(e) => handleNewPswdChange(e)}
                             ></Form.Control>
                             {textToShort ? (
                                 <Form.Text style={{ color: "tomato" }}>
-                                    password must be at least 6 character.
+                                    รหัสผ่านต้องมีตัวอักษรหรือตัวเลขอย่างน้อย 6 ตัว.
                                 </Form.Text>
                             ) : null}
                         </Form.Group>
@@ -67,14 +67,14 @@ function ResetPassword(props) {
                     variant="secondary"
                     onClick={() => props.setmodalVisible(false)}
                 >
-                    Cancel
+                    ยกเลิก
                 </Button>
                 <Button
-                    variant="primary"
+                    variant="success"
                     onClick={() => handleSubmit()}
                     disabled={textToShort}
                 >
-                    Save
+                    บันทึก
                 </Button>
             </Modal.Footer>
         </Modal>

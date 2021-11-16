@@ -19,6 +19,7 @@ class CreateOrderProductTable extends Migration
             $table->foreignId('product_id');
             $table->integer('qty');
             $table->double('total');
+            $table->string('status');
             $table->timestamps();
         });
     }

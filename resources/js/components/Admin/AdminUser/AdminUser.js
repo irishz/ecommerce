@@ -8,7 +8,7 @@ function AdminUser() {
 
     useEffect(async () => {
         axios.get("/api/user-all").then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             setuserList(res.data);
         });
     }, []);

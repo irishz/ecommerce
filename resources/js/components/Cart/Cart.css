@@ -27,7 +27,7 @@
     margin-right: 10px;
 }
 
-input[type=number]{
+.cart-qty{
     text-align: center;
     background-color: #fff;
     width: 5rem;

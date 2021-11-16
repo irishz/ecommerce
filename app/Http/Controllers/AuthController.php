@@ -39,7 +39,7 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->only('employee_code', 'password'))) {
             return response([
-                'message' => 'EmployeeCode or Password Invalid!'
+                'message' => 'รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง!'
             ], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -60,7 +60,7 @@ class AuthController extends Controller
         $cookie = Cookie::forget('jwt');
 
         return response([
-            'message' => 'Logout Success'
+            'message' => 'ออกจากระบบสำเร็จ'
         ])->withCookie($cookie);
     }
 
@@ -78,7 +78,7 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json([
-            'message' => 'Update profile successfully.'
+            'message' => 'อัพเดทข้อมูลส่วนตัวสำเร็จ.'
         ]);
     }
 
@@ -91,7 +91,7 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json([
-            'message' => 'Reset password successfully'
+            'message' => 'เปลี่ยนรหัสผ่านสำเร็จ'
         ]);
     }
 }

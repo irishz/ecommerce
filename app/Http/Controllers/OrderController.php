@@ -50,7 +50,7 @@ class OrderController extends Controller
         $orders = Order::whereIn('id', $request->id)->update(['status' => $request->status]);
 
         return response()->json([
-            'message' => 'Update order status successfully',
+            'message' => 'อัพเดทสถานะคำสั่งซื้อสำเร็จ',
         ]);
     }
 
@@ -83,14 +83,15 @@ class OrderController extends Controller
         $user = Auth::user();
         $order = $user->orders()->create([
             'total' => $total,
-            'status' => "Ordered"
+            'status' => "สั่งซื้อ"
         ]);
         
         //Create order items
         foreach ($carts as $key => $cart) {
             $order->orderitems()->attach($cart['product_id'],[
                 'qty' => $cart['qty'],
-                'total' => $cart['total']
+                'total' => $cart['total'],
+                'status' => "ปกติ"
             ]);
         }
 
@@ -98,7 +99,7 @@ class OrderController extends Controller
         $carts = Cart::where('user_id', Auth::user()->id)->delete();
 
         return response()->json([
-            'message' => 'Create Ordered Successfully',
+            'message' => 'สั่งซื้อสินค้าสำเร็จ',
         ]);
     }
 

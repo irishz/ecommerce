@@ -29,6 +29,7 @@ Route::post('register', [AuthController::class, 'register']);
 
 //Product
 Route::get('product/{category_id}', [ProductController::class, 'index']);
+Route::get('product-all', [ProductController::class, 'getallprod']);
 
 
 
@@ -59,4 +60,8 @@ Route::middleware('auth:sanctum')->group(function (){
 
     //Order Product
     Route::get('/order-product/{order_id}', [OrderProductController::class, 'getOrderProducts']);
+    Route::put('/order-product/status', [OrderProductController::class, 'updateOrderProdStatus']);
+
+    //Invoice
+    Route::post('/invoice', [InvoiceController::class, 'store']);
 });

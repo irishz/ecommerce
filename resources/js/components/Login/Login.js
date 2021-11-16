@@ -42,7 +42,7 @@ function Login(props) {
                     (err.toJSON().message =
                         "Request failed with status code 401")
                 ) {
-                    seterrMessage("Employee code or password invalid!");
+                    seterrMessage("รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง!");
                 }
             });
     }
@@ -64,16 +64,16 @@ function Login(props) {
                             </div>
                             <div className="login-wrap p-4 p-lg-5">
                                 <Row className="d-flex">
-                                    <h3>Sign In</h3>
+                                    <h3>เข้าสู่ระบบ</h3>
                                     <Form>
                                         <Form.Group className="mb-3">
                                             <Form.Label>
-                                                Employee Code
+                                                รหัสพนักงาน
                                             </Form.Label>
                                             <Form.Control
                                                 className="login"
                                                 type="text"
-                                                placeholder="Enter Employee Code"
+                                                placeholder="ใส่รหัสพนักงาน"
                                                 onChange={(e) =>
                                                     onEmployeeCodeChange(e)
                                                 }
@@ -86,11 +86,11 @@ function Login(props) {
                                             className="mb-3"
                                             controlId="formBasicPassword"
                                         >
-                                            <Form.Label>Password</Form.Label>
+                                            <Form.Label>รหัสผ่าน</Form.Label>
                                             <Form.Control
                                                 className="login"
                                                 type="password"
-                                                placeholder="Password"
+                                                placeholder="รหัสผ่าน"
                                                 onChange={(e) =>
                                                     onPasswordChange(e)
                                                 }
@@ -117,7 +117,7 @@ function Login(props) {
                                                 type="submit"
                                                 onClick={(e) => onSubmit(e)}
                                             >
-                                                Sign In
+                                                เข้าสู่ระบบ
                                             </Button>
                                         </Form.Group>
                                     </Form>

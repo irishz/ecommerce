@@ -13,6 +13,7 @@ import {
 import "./Product.css";
 import ConfigContext from "../Context/ConfigContext";
 import AuthContext from "../Context/AuthContext";
+import { BsCartFill } from "react-icons/bs";
 
 function Product() {
     const [prodList, setprodList] = useState([]);
@@ -113,17 +114,18 @@ function Product() {
                                     {prod.description}
                                 </Card.Text>
                                 <Card.Text>
-                                    <strong>
-                                        {prod.price}
-                                        {cc.currency_symbol}
-                                    </strong>
+                                    <strong>{prod.price} </strong>
+                                    {cc.currency_symbol}
                                 </Card.Text>
                                 <Button
                                     variant="primary"
                                     type="submit"
                                     onClick={(e) => addToCart(e, prod)}
                                 >
-                                    Add to cart
+                                    <BsCartFill
+                                        style={{ marginBottom: "5px" }}
+                                    />{" "}
+                                    เพิ่มใส่รถเข็น
                                 </Button>
                             </Card.Body>
                         </Card>

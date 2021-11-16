@@ -27,9 +27,9 @@ import AdminHome from "../Admin/AdminHome/AdminHome";
 import AdminUser from "../Admin/AdminUser/AdminUser";
 import AdminUserDetail from "../Admin/AdminUser/AdminUserDetail";
 import { Container } from "react-bootstrap";
-import { departments } from './Department';
+import { departments } from "./Department";
 import OrderPayment from "../Admin/AdminOrder/OrderPayment";
-import OrderIssue from "../Admin/AdminOrder/OrderIssue";
+import OrderDetail from "../Admin/AdminOrder/OrderDetail";
 
 function App() {
     const [userName, setuserName] = useState("");
@@ -55,7 +55,7 @@ function App() {
     return (
         <Router>
             <AuthContext.Provider value={{ userId: userId }}>
-                <ConfigContext.Provider value={{ currency_symbol: "฿" }}>
+                <ConfigContext.Provider value={{ currency_symbol: "บาท" }}>
                     <DeptContext.Provider value={departments}>
                         {isAdmin ? (
                             <Container className="m-0 p-0">
@@ -82,12 +82,12 @@ function App() {
                                                 component={AdminOrder}
                                             />
                                             <Route
-                                                path="/admin/order-payment"
-                                                component={OrderPayment}
+                                                path="/admin/order-detail"
+                                                component={OrderDetail}
                                             />
                                             <Route
-                                                path="/admin/order-issue"
-                                                component={OrderIssue}
+                                                path="/admin/order-payment"
+                                                component={OrderPayment}
                                             />
                                             <Route
                                                 path="/admin/user"
