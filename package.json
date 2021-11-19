@@ -29,6 +29,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "generate-pdf-from-react-html": "^1.0.5",
         "moment": "^2.29.1",
         "react-bootstrap": "^2.0.0-rc.0",
         "react-icons": "^4.3.1",

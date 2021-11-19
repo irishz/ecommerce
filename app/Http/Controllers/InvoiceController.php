@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\User;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -35,14 +37,26 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $invoice = Invoice::order()->create([
+        //Get user
+        $user = User::where('id', $request->user_id)->first();
+
+        //Create Invoice
+        $invoice = $user->invoices()->create([
             'order_id' => $request->id
         ]);
 
-        $orderitems = OrderProduct::where('id', $request->id);
-        
-        return $response()->$json([
-            'message' => 'สร้างใบเสร็จเรียบร้อย'
+        //Create Invoice items
+        $orderitems = OrderProduct::where('order_id', $request->id)->get();
+        // dd($orderitems);
+        foreach ($orderitems as $key => $orderitem) {
+            $invoice->invitems()->attach($orderitem['product_id'], [
+                'qty' => $orderitem['qty'],
+                'total' => $orderitem['total']
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'ชำระเงินสำเร็จ',
         ]);
     }
 

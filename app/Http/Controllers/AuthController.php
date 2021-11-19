@@ -94,4 +94,13 @@ class AuthController extends Controller
             'message' => 'เปลี่ยนรหัสผ่านสำเร็จ'
         ]);
     }
+
+    public function destroy($id)
+    {
+        User::find($id)->delete();
+
+        return response()->json([
+            'message' => 'ลบผู้ใช้สำเร็จ'
+        ]);
+    }
 }

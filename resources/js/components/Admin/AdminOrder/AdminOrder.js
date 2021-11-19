@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import { GiShoppingBag } from "react-icons/gi";
 import { BsCheckSquareFill, BsCashCoin } from "react-icons/bs";
+import "../AdminNav/Admin.css";
 
 function AdminOrder() {
     const [orderList, setorderList] = useState([]);
@@ -75,18 +76,19 @@ function AdminOrder() {
 
     return (
         <div>
-            <h4>Admin Order Page</h4>
+            <h4 className="topic">จัดการคำสั่งซื้อ</h4>
 
             <Row style={{ marginTop: 15, justifyContent: "space-between" }}>
                 {["สั่งซื้อ", "ยืนยัน", "ชำระเงิน"].map((stat, idx) => (
                     <Col key={idx} lg={3}>
                         <Card
-                            style={{
-                                backgroundColor: "#FF5733",
-                                color: "white",
-                                fontWeight: "bold",
-                                marginInline: 10,
-                            }}
+                            className={
+                                stat === "สั่งซื้อ"
+                                    ? "stat-order"
+                                    : stat === "ยืนยัน"
+                                    ? "stat-confirm"
+                                    : "stat-payment"
+                            }
                         >
                             <Card.Body>
                                 <div
@@ -100,12 +102,15 @@ function AdminOrder() {
                                     <div>
                                         <h6>{stat}</h6>
                                         <p>
-                                            {
-                                                orderList.filter(
-                                                    (order) =>
-                                                        order.status === stat
-                                                ).length
-                                            }
+                                            <strong>
+                                                {
+                                                    orderList.filter(
+                                                        (order) =>
+                                                            order.status ===
+                                                            stat
+                                                    ).length
+                                                }
+                                            </strong>
                                         </p>
                                     </div>
                                     <div style={{ alignContent: "end" }}>
@@ -127,7 +132,7 @@ function AdminOrder() {
             <Row style={{ marginTop: 15 }}>
                 <Col>
                     <Form>
-                        <Form.Text>Start Date</Form.Text>
+                        <Form.Text>วันที่เริ่มต้น</Form.Text>
                         <Form.Control
                             type="date"
                             value={startDate}
@@ -137,7 +142,7 @@ function AdminOrder() {
                 </Col>
                 <Col>
                     <Form>
-                        <Form.Text>End Date</Form.Text>
+                        <Form.Text>วันที่สิ้นสุด</Form.Text>
                         <Form.Control
                             type="date"
                             value={endDate}
@@ -147,26 +152,24 @@ function AdminOrder() {
                 </Col>
                 <Col lg={2}>
                     <Form>
-                        <Form.Text>Status</Form.Text>
+                        <Form.Text>สถานะ</Form.Text>
                         <Form.Select
                             value={orderStatus}
                             onChange={(e) => setorderStatus(e.target.value)}
                         >
-                            {[
-                                "สั่งซื้อ",
-                                "ยืนยัน",
-                                "ชำระเงิน",
-                            ].map((stat, idx) => (
-                                <option key={idx} value={stat}>
-                                    {stat}
-                                </option>
-                            ))}
+                            {["สั่งซื้อ", "ยืนยัน", "ชำระเงิน"].map(
+                                (stat, idx) => (
+                                    <option key={idx} value={stat}>
+                                        {stat}
+                                    </option>
+                                )
+                            )}
                         </Form.Select>
                     </Form>
                 </Col>
-                <Col lg={2} style={{ display: "flex", alignSelf: "center" }}>
+                <Col lg={3} style={{ display: "flex", alignSelf: "center" }}>
                     <Button variant="primary" onClick={() => onSearch()}>
-                        Search
+                        ค้นหา
                     </Button>
                     <Button
                         variant="success"
@@ -181,7 +184,7 @@ function AdminOrder() {
                                 role="status"
                             />
                         ) : (
-                            "Process"
+                            "ดำเนินการ"
                         )}
                     </Button>
                 </Col>
@@ -207,18 +210,18 @@ function AdminOrder() {
                                     </Alert>
                                 ) : null}
                                 <label>
-                                    <strong>Total : </strong>{" "}
+                                    <strong>พบข้อมูล : </strong>{" "}
                                     {orderMonthList.length}{" "}
-                                    <strong>records.</strong>
+                                    <strong>รายการ.</strong>
                                 </label>
                             </div>
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>Order Id</th>
-                                        <th>User</th>
-                                        <th>Status</th>
-                                        <th>Created At</th>
+                                        <th>หมายเลขออเดอร์</th>
+                                        <th>ผู้สั่งซื้อ</th>
+                                        <th>สถานะ</th>
+                                        <th>วันที่สั่งซื้อ</th>
                                     </tr>
                                 </thead>
                                 <tbody>

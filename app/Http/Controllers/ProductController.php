@@ -14,7 +14,9 @@ class ProductController extends Controller
      */
     public function index($category_id)
     {
-        $product = Product::where('category_id', $category_id)->get();
+        $product = Product::where('category_id', $category_id)
+            ->where('active', 1)
+            ->get();
 
         return response()->json($product);
     }
@@ -75,9 +77,24 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        $product->category_id = $request->category_id;
+        $product->vendor_id = $request->vendor_id;
+        $product->product_code = $request->product_code;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->qty = $request->qty;
+        $product->active = $request->active;
+        
+        $product->save();
+        
+        return response()->json([
+            'message' => 'อัพเดทข้อมูลสินค้าสำเร็จ!'
+        ]);
     }
 
     /**
@@ -86,8 +103,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product, $id)
     {
-        //
+        Product::find($id)->delete();
+
+        return response()->json([
+            'message' => 'ลบสินค้าสำเร็จ!'
+        ]);
     }
 }

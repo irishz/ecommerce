@@ -10,6 +10,7 @@ import {
     Button,
     Alert,
 } from "react-bootstrap";
+import "../AdminNav/Admin.css";
 
 function OrderDetail() {
     const [searchInput, setsearchInput] = useState(null);
@@ -43,13 +44,13 @@ function OrderDetail() {
 
     return (
         <Container>
-            <h4>Order Detail</h4>
+            <h4 className="topic">รายละเอียดคำสั่งซื้อ</h4>
 
             <Row className="mb-10">
                 <Col lg={4}>
                     <Form style={{ display: "flex" }}>
                         <Form.Group>
-                            <Form.Text>Please input order id</Form.Text>
+                            <Form.Text>ใส่หมายเลขคำสั่งซื้อ</Form.Text>
                             <Form.Control
                                 type="number"
                                 min={0}
@@ -63,16 +64,16 @@ function OrderDetail() {
 
             <Row className="mb-2">
                 <Col lg={2}>
-                    <strong>Order:</strong> {orderPaymentData.id}
+                    <strong>หมายเลขออเดอร์:</strong> {orderPaymentData.id}
                 </Col>
                 <Col lg={2}>
-                    <strong>Total:</strong> {orderPaymentData.total}
+                    <strong>ยอดรวม:</strong> {orderPaymentData.total}
                 </Col>
                 <Col lg={2}>
-                    <strong>Status:</strong> {orderPaymentData.status}
+                    <strong>สถานะ:</strong> {orderPaymentData.status}
                 </Col>
                 <Col>
-                    <strong>Create At:</strong>{" "}
+                    <strong>วันที่สั่งซื้อ:</strong>{" "}
                     {moment(orderPaymentData.created_at)
                         .locale("th")
                         .format("LLL")}
@@ -80,22 +81,29 @@ function OrderDetail() {
             </Row>
 
             {_.isEmpty(orderPaymentData) ? (
-                <p>Not found any data.</p>
+                <p>ไม่พบข้อมูล.</p>
             ) : (
                 <div>
                     {" "}
                     <Table striped bordered hover size="sm">
                         <thead>
                             <tr>
-                                <th>Product Code</th>
-                                <th>Product Name</th>
-                                <th>Status</th>
+                                <th>รหัสสินค้า</th>
+                                <th>ชื่อสินค้า</th>
+                                <th>สถานะ</th>
                             </tr>
                         </thead>
                         <tbody>
                             {orderPaymentData.order_product.map(
                                 (ordProd, idx) => (
-                                    <tr key={idx}>
+                                    <tr
+                                        key={idx}
+                                        className={
+                                            ordProd.status !== "ปกติ"
+                                                ? "unnormal"
+                                                : "normal"
+                                        }
+                                    >
                                         <td>{ordProd.product.product_code}</td>
                                         <td>{ordProd.product.name}</td>
                                         <td>

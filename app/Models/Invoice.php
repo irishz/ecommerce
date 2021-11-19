@@ -14,10 +14,10 @@ class Invoice extends Model
         'order_id',
     ];
 
-    protected $with = ['order'];
+    protected $with = ['invitems'];
 
-    public function order()
+    public function invitems()
     {
-        return $this->belongsTo(Order::class)->withTimestamps();
+        return $this->belongsToMany(Product::class)->withTimestamps();
     }
 }

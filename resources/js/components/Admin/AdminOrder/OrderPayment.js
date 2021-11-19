@@ -10,18 +10,23 @@ import {
     Alert,
     Container,
 } from "react-bootstrap";
+import "../AdminNav/Admin.css";
 
 function OrderPayment() {
     const [searchInput, setsearchInput] = useState(null);
     const [alertUpdate, setalertUpdate] = useState("");
-    const [orderConfirmData, setorderConfirmData] = useState({});
+    const [orderConfirmData, setorderConfirmData] = useState(null);
 
     useEffect(() => {
         axios.get("/api/getsingleorder/" + searchInput).then((res) => {
             console.log(res.data);
             if (res.data !== null) {
                 setorderConfirmData(res.data);
-            };
+            } else if (res.data.status !== "ยืนยัน") {
+                setorderConfirmData(null);
+            } else {
+                setorderConfirmData(null);
+            }
         });
     }, [searchInput]);
 
@@ -30,8 +35,8 @@ function OrderPayment() {
         await axios
             .put("/api/order/status", { id: [order_id], status: "ชำระเงิน" })
             .then((res) => {
-                setsearchInput("");
-                setorderConfirmData({});
+                setsearchInput(null);
+                setorderConfirmData(null);
                 setalertUpdate(res.data.message);
                 setTimeout(() => {
                     setalertUpdate(null);
@@ -40,19 +45,30 @@ function OrderPayment() {
             .catch((err) => console.log(err));
 
         //Create Invoice
-        await axios.post('/api/invoice' , {id: orderConfirmData.id})
-        
+        await axios
+            .post("/api/invoice", {
+                id: orderConfirmData.id,
+                user_id: orderConfirmData.user.id,
+            })
+            .then((res) => {
+                setsearchInput(null);
+                setorderConfirmData(null);
+                setalertUpdate(res.data.message);
+                setTimeout(() => {
+                    setalertUpdate(null);
+                }, 3000);
+            });
     }
 
     return (
         <Container>
-            <h4>Order Payment</h4>
+            <h4 className="topic">ชำระเงิน</h4>
 
             <Row className="mb-10">
                 <Col lg={4}>
                     <Form style={{ display: "flex" }}>
                         <Form.Group>
-                            <Form.Text>Please input order id</Form.Text>
+                            <Form.Text>ใส่หมายเลขคำสั่งซื้อ</Form.Text>
                             <Form.Control
                                 type="number"
                                 min={0}
@@ -64,42 +80,41 @@ function OrderPayment() {
                 </Col>
             </Row>
 
-            <Row className="mb-2">
-                <Col lg={2}>
-                    <strong>Order:</strong> {orderConfirmData.id}
-                </Col>
-                <Col lg={2}>
-                    <strong>Total:</strong> {orderConfirmData.total}
-                </Col>
-                <Col lg={2}>
-                    <strong>Status:</strong> {orderConfirmData.status}
-                </Col>
-                <Col>
-                    <strong>Order By:</strong>{" "}
-                    {_.isEmpty(orderConfirmData)
-                        ? null
-                        : orderConfirmData.user.first_name}
-                </Col>
-                <Col>
-                    <strong>Create At:</strong>{" "}
-                    {moment(orderConfirmData.created_at)
-                        .locale("th")
-                        .format("LLL")}
-                </Col>
-            </Row>
+            {_.isEmpty(orderConfirmData) ? null : (
+                <Row className="mb-2">
+                    <Col lg={2}>
+                        <strong>หมายเลขออเดอร์:</strong> {orderConfirmData.id}
+                    </Col>
+                    <Col lg={2}>
+                        <strong>สถานะ:</strong> {orderConfirmData.status}
+                    </Col>
+                    <Col>
+                        <strong>ชื่อผู้สั่งซื้อ:</strong>{" "}
+                        {orderConfirmData.order_product.length < 0
+                            ? null
+                            : orderConfirmData.user.first_name}
+                    </Col>
+                    <Col>
+                        <strong>วันที่สั่งซื้อ:</strong>{" "}
+                        {moment(orderConfirmData.created_at)
+                            .locale("th")
+                            .format("LLL")}
+                    </Col>
+                </Row>
+            )}
 
             {_.isEmpty(orderConfirmData) ? (
-                <p>Not found any data.</p>
+                <p>ไม่พบข้อมูล.</p>
             ) : (
                 <div>
                     {" "}
                     <Table striped bordered hover size="sm">
                         <thead>
                             <tr>
-                                <th>Product Code</th>
-                                <th>Product Name</th>
-                                <th>Order Qty</th>
-                                <th>Status</th>
+                                <th>รหัสสินค้า</th>
+                                <th>ชื่อสินค้า</th>
+                                <th>จำนวน</th>
+                                <th>รวม</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,33 +124,7 @@ function OrderPayment() {
                                         <td>{ordProd.product.product_code}</td>
                                         <td>{ordProd.product.name}</td>
                                         <td>{ordProd.qty}</td>
-                                        <td>
-                                            <Form>
-                                                <Form.Select
-                                                    onChange={(e) =>
-                                                        (orderConfirmData.order_product[
-                                                            idx
-                                                        ].status =
-                                                            e.target.value)
-                                                    }
-                                                >
-                                                    <option
-                                                        value={ordProd.status}
-                                                    >
-                                                        {ordProd.status}
-                                                    </option>
-                                                    <option value="ปกติ">
-                                                        ปกติ
-                                                    </option>
-                                                    <option value="ยกเลิกโดยผู้สั่งซื้อ">
-                                                        ยกเลิก
-                                                    </option>
-                                                    <option value="ไม่มีสินค้า">
-                                                        ไม่มีสินค้า
-                                                    </option>
-                                                </Form.Select>
-                                            </Form>
-                                        </td>
+                                        <td>{ordProd.total}</td>
                                     </tr>
                                 )
                             )}
@@ -143,9 +132,22 @@ function OrderPayment() {
                     </Table>
                     <Row>
                         <Col>
-                            <Button variant="primary" onClick={() => onPayment(orderConfirmData.id)}>
-                                ชำระเงิน
+                            <Button
+                                variant="primary"
+                                onClick={() => onPayment(orderConfirmData.id)}
+                                disabled={
+                                    orderConfirmData.status !== "ยืนยัน"
+                                        ? true
+                                        : false
+                                }
+                            >
+                                {orderConfirmData.status === "ชำระเงิน"
+                                    ? "ชำระเงินแล้ว"
+                                    : "ชำระเงิน"}
                             </Button>
+                        </Col>
+                        <Col style={{ textAlign: "end", marginRight: "2rem" }}>
+                            <strong>ทั้งหมด: {orderConfirmData.total} บาท</strong>
                         </Col>
                     </Row>
                     {alertUpdate ? (

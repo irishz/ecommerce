@@ -30,6 +30,12 @@ import { Container } from "react-bootstrap";
 import { departments } from "./Department";
 import OrderPayment from "../Admin/AdminOrder/OrderPayment";
 import OrderDetail from "../Admin/AdminOrder/OrderDetail";
+import AdminProduct from "../Admin/AdminProduct/AdminProduct";
+import AdminProductDetail from "../Admin/AdminProduct/AdminProductDetail";
+import OrderSummary from "../Admin/AdminOrder/OrderSummary";
+import AdminVendor from "../Admin/AdminVendor/AdminVendor";
+import AdminVendorDetail from "../Admin/AdminVendor/AdminVendorDetail";
+import AdminVendorCreate from "../Admin/AdminVendor/AdminVendorCreate";
 
 function App() {
     const [userName, setuserName] = useState("");
@@ -88,6 +94,30 @@ function App() {
                                             <Route
                                                 path="/admin/order-payment"
                                                 component={OrderPayment}
+                                            />
+                                            <Route
+                                                path="/admin/order-summary"
+                                                component={OrderSummary}
+                                            />
+                                            <Route
+                                                path="/admin/product"
+                                                component={AdminProduct}
+                                            />
+                                            <Route
+                                                path="/admin/product-detail"
+                                                component={AdminProductDetail}
+                                            />
+                                            <Route
+                                                path="/admin/vendor"
+                                                component={AdminVendor}
+                                            />
+                                            <Route
+                                                path="/admin/vendor-create"
+                                                component={AdminVendorCreate}
+                                            />
+                                            <Route
+                                                path="/admin/vendor-detail"
+                                                component={AdminVendorDetail}
                                             />
                                             <Route
                                                 path="/admin/user"

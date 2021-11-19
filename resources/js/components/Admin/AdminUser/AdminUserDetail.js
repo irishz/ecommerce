@@ -52,7 +52,9 @@ function AdminUserDetail() {
 
     return (
         <div>
-            <h4>User Detail</h4>
+            <h4 className="topic">
+                {data.state.first_name + " " + data.state.last_name}
+            </h4>
 
             <Form>
                 <Form.Group as={Row} className="mb-3">
@@ -65,7 +67,7 @@ function AdminUserDetail() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="3">
-                        Employee Code:
+                        รหัสพนักงาน:
                     </Form.Label>
                     <Col sm="4">
                         <Form.Control plaintext readOnly value={employeeCode} />
@@ -73,7 +75,7 @@ function AdminUserDetail() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="3">
-                        Name:
+                        ชื่อ-นามสกุล:
                     </Form.Label>
                     <Col sm="4">
                         <Form.Control
@@ -94,7 +96,7 @@ function AdminUserDetail() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="3">
-                        Department:
+                        อีเมล:
                     </Form.Label>
                     <Col sm="4">
                         <Form.Control
@@ -107,7 +109,7 @@ function AdminUserDetail() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="3">
-                        Department:
+                        แผนก:
                     </Form.Label>
                     <Col sm="4">
                         <Form.Select
@@ -123,12 +125,12 @@ function AdminUserDetail() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="3">
-                        Role:
+                        ประเภท:
                     </Form.Label>
                     <Col sm="4">
                         <Form.Check
                             type="switch"
-                            label="admin"
+                            label="ผู้ดูแลระบบ"
                             onChange={() => setisAdmin(!isAdmin)}
                             checked={isAdmin > 0 ? true : false}
                         />
@@ -142,10 +144,10 @@ function AdminUserDetail() {
                     variant="success"
                     onClick={(e) => onSave(e)}
                 >
-                    Save
+                    บันทึก
                 </Button>
                 <Button variant="danger" onClick={() => history.goBack()}>
-                    Back
+                    ย้อนกลับ
                 </Button>
             </div>
 

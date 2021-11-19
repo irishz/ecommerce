@@ -108,7 +108,7 @@ function Cart() {
                 <Alert variant="success" dismissible className="alert-success">
                     <strong>
                         {alertCreateOrder}{" "}
-                        <Link to="/shop/order">View your orders.</Link>
+                        <Link to="/shop/order">ดูคำสั่งซื้อของคุณ.</Link>
                     </strong>
                 </Alert>
             ) : null}

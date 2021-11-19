@@ -1,37 +1,52 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Col, Row, Table, Button } from "react-bootstrap";
+import { Col, Row, Table, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function AdminUser() {
     const [userList, setuserList] = useState([]);
+    const [showModal, setshowModal] = useState(false);
+    const [deleteUserId, setdeleteUserId] = useState(null);
+    const [alertDeleteMsg, setalertDeleteMsg] = useState("");
 
     useEffect(async () => {
         axios.get("/api/user-all").then((res) => {
             // console.log(res.data);
             setuserList(res.data);
         });
-    }, []);
+    }, [alertDeleteMsg]);
 
-    function onDeleteUser(user_id) {
-        console.log(user_id);
+    function onDeleteClick(user_id) {
+        setshowModal(true);
+        setdeleteUserId(user_id);
+    }
+
+    function onDeleteUser() {
+        axios.delete("/api/user/delete/" + deleteUserId).then((res) => {
+            console.log(res.data.message);
+            setalertDeleteMsg(res.data.message);
+            setTimeout(() => {
+                setalertDeleteMsg("");
+                setshowModal(false);
+            }, 3000);
+        });
     }
 
     return (
         <div>
-            <h4>Admin User Page</h4>
+            <h4 className="topic">จัดการผู้ใช้</h4>
 
             <Row>
                 <Col>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Employee Code</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Department</th>
-                                <th>Email</th>
+                                <th>ID</th>
+                                <th>รหัสพนักงาน</th>
+                                <th>ชื่อจริง</th>
+                                <th>นามสกุล</th>
+                                <th>แผนก</th>
+                                <th>อีเมล</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -69,17 +84,17 @@ function AdminUser() {
                                                     variant="primary"
                                                     size="sm"
                                                 >
-                                                    Edit
+                                                    แก้ไข
                                                 </Button>
                                             </Link>
                                             <Button
                                                 variant="danger"
                                                 size="sm"
                                                 onClick={() =>
-                                                    onDeleteUser(user.id)
+                                                    onDeleteClick(user.id)
                                                 }
                                             >
-                                                Delete
+                                                ยกเลิก
                                             </Button>
                                         </div>
                                     </td>
@@ -89,6 +104,34 @@ function AdminUser() {
                     </Table>
                 </Col>
             </Row>
+
+            <Modal show={showModal}>
+                <Modal.Header>ยืนยันการทำรายการ</Modal.Header>
+                <Modal.Body>
+                    {alertDeleteMsg.length > 0
+                        ? alertDeleteMsg
+                        : "คุณต้องการลบผู้ใช้นี้ใช่หรือไม่?"}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant={
+                            alertDeleteMsg.length > 0
+                                ? "outline-danger"
+                                : "danger"
+                        }
+                        disabled={alertDeleteMsg.length > 0 ? true : false}
+                        onClick={onDeleteUser}
+                    >
+                        {alertDeleteMsg.length > 0 ? "สำเร็จ" : "ลบ"}
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setshowModal(false)}
+                    >
+                        ยกเลิก
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }

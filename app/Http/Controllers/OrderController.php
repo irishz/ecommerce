@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Carbon;
 
 class OrderController extends Controller
 {
@@ -40,6 +41,22 @@ class OrderController extends Controller
     {
         $orders = Order::whereBetween('created_at', [$from, $to])->get();
 
+        return response()->json($orders);
+    }
+
+    public function getOrderByMonthToVendor($from, $to)
+    {
+        $orders = DB::table('orders')
+            ->join('order_product', 'order_product.order_id', 'orders.id')
+            ->join('products', 'products.id', 'order_product.product_id')
+            ->join('vendors', 'vendors.id', 'products.vendor_id')
+            ->select('products.name','vendors.id as vend_id', DB::raw('SUM(order_product.qty) as prod_qty'))
+            ->where('orders.status', 'ยืนยัน')
+            ->where('order_product.status', 'ปกติ')
+            ->whereBetween('orders.created_at', [$from, $to])
+            ->groupBy(['products.name', 'vendors.id'])
+            ->orderBy('vendors.id')->get();
+ 
         return response()->json($orders);
     }
 

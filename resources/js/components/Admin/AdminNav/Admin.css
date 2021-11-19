@@ -1,0 +1,27 @@
+.topic {
+    font-weight: bold;
+    padding-bottom: 17px;
+}
+
+.card.stat-order {
+    /* background-color: "#FF5733"; */
+    background: linear-gradient(135deg, #fad961 0%, #f76b1c 100%);
+    font-weight: "bold";
+    margin-inline: 10;
+}
+
+.card.stat-confirm {
+    background: linear-gradient(135deg, #42e695 0%, #3bb2b8 100%);
+    font-weight: "bold";
+    margin-inline: 10;
+}
+
+.card.stat-payment {
+    background: linear-gradient(135deg, #dfec51 0%, #73aa0a 100%);
+    font-weight: "bold";
+    margin-inline: 10;
+}
+
+.unnormal {
+    background-color: #E61F0E;
+}
