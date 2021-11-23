@@ -53,7 +53,7 @@ function OrderProduct(props) {
             {/* Stepper */}
             <div className="stepper">
                 {["สั่งซื้อ", "ยืนยัน", "ชำระเงิน"].map((item, idx) => (
-                    <div className="stepper-content">
+                    <div className="stepper-content" key={idx}>
                         <div
                             className={
                                 orderStatus >= idx + 1
@@ -85,7 +85,7 @@ function OrderProduct(props) {
                 </Col>
             </Row>
 
-            <Table striped bordered hover sm>
+            <Table striped bordered hover sm responsive>
                 <thead>
                     <tr>
                         <th>รหัสสินค้า</th>
@@ -111,10 +111,10 @@ function OrderProduct(props) {
             </Table>
             <div className="order-total">
                 <label>
-                    <strong>วันที่สั่งซื้อ: </strong>{" "}
-                    {moment(props.location.state.createdAt)
+                    วันที่สั่งซื้อ:{" "}
+                    <strong>{moment(props.location.state.createdAt)
                         .locale("th")
-                        .format("LLL")}
+                        .format("LLL")}</strong>
                 </label>
                 <label>
                     <strong>

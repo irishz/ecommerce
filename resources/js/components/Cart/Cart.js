@@ -13,6 +13,7 @@ import {
     Form,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import AuthContext from "../Context/AuthContext";
 import ConfigContext from "../Context/ConfigContext";
 import "./Cart.css";
@@ -20,12 +21,12 @@ import "./Cart.css";
 function Cart() {
     const [cartList, setcartList] = useState([]);
     const [alertCartDelete, setalertCartDelete] = useState("");
-    const [alertCartSave, setalertCartSave] = useState("");
     const [alertCreateOrder, setalertCreateOrder] = useState("");
     const [btnSaveDisable, setbtnSaveDisable] = useState(true);
 
     const cfg = useContext(ConfigContext);
     const userId = useContext(AuthContext);
+    const cartContext = useContext(AuthContext);
 
     useEffect(async () => {
         axios.get("/api/getcart").then((res) => {
@@ -37,10 +38,14 @@ function Cart() {
     function onCartDelete(cart_id) {
         axios.delete("/api/cart/delete/" + cart_id).then((res) => {
             // console.log(res.data.message);
-            setalertCartDelete(res.data.message);
-            setTimeout(() => {
-                setalertCartDelete(null);
-            }, 3000);
+            Swal.fire({
+                title: "สำเร็จ!",
+                text: res.data.message,
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            cartContext.setcartCount(cartContext.cartCount - 1);
         });
     }
 
@@ -60,10 +65,13 @@ function Cart() {
             .put("/api/cart/qty-change", cartList)
             .then((res) => {
                 setbtnSaveDisable(true);
-                setalertCartSave(res.data.message);
-                setTimeout(() => {
-                    setalertCartSave(null);
-                }, 3000);
+                Swal.fire({
+                    title: "สำเร็จ!",
+                    text: res.data.message,
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
             })
             .catch((err) => console.log(err));
     }
@@ -99,11 +107,6 @@ function Cart() {
                     <strong>{alertCartDelete}</strong>
                 </Alert>
             ) : null}
-            {alertCartSave ? (
-                <Alert variant="success" dismissible className="alert-success">
-                    <strong>{alertCartSave}</strong>
-                </Alert>
-            ) : null}
             {alertCreateOrder ? (
                 <Alert variant="success" dismissible className="alert-success">
                     <strong>
@@ -116,75 +119,74 @@ function Cart() {
                 <Col lg={8}>
                     {cartList.map((cart, idx) => (
                         <div key={idx}>
-                            <Row>
-                                <Col>
-                                    <Row className="cart-row">
-                                        <Col lg={1}>{idx + 1}</Col>
-                                        <Col
-                                            style={{
-                                                justifyContent: "center",
-                                            }}
-                                        >
-                                            <Figure>
-                                                <Figure.Image
-                                                    width={85}
-                                                    src={
-                                                        "/products/" +
-                                                        cart.product.id +
-                                                        "/" +
-                                                        cart.product.name +
-                                                        ".jpg"
-                                                    }
-                                                ></Figure.Image>
-                                            </Figure>
-                                        </Col>
-                                        <Col>{cart.product.name}</Col>
-                                        <Col>{cart.product.price}</Col>
-                                        <Col>
-                                            {/* <ButtonGroup>
-                                                <Button
-                                                    variant="secondary"
-                                                    size="sm"
-                                                    onClick={() =>
-                                                        onQtyChange(
-                                                            cart.id,
-                                                            cart.qty - 1
-                                                        )
-                                                    }
-                                                >
-                                                    -
-                                                </Button> */}
-                                            <Form>
-                                                <Form.Control
-                                                    className="cart-qty"
-                                                    type="number"
-                                                    min={1}
-                                                    defaultValue={cart.qty}
-                                                    onChange={(e) =>
-                                                        onQtyChange(
-                                                            idx,
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                />
-                                            </Form>
-                                            {/* <Button
-                                                    variant="secondary"
-                                                    size="sm"
-                                                    onClick={() =>
-                                                        onQtyChange(
-                                                            cart.id,
-                                                            cart.qty + 1
-                                                        )
-                                                    }
-                                                >
-                                                    +
-                                                </Button>
-                                            </ButtonGroup> */}
-                                        </Col>
-                                    </Row>
+                            <Row
+                                style={{
+                                    margin: 10,
+                                    backgroundColor: "white",
+                                    borderRadius: 5,
+                                }}
+                            >
+                                <Col className="d-flex">
+                                    <img
+                                        style={{
+                                            width: 70,
+                                            height: 70,
+                                            marginRight: 10,
+                                            boxShadow: "1px 1px gray",
+                                        }}
+                                        src={
+                                            "/products/" +
+                                            cart.product.id +
+                                            "/" +
+                                            cart.product.name +
+                                            ".jpg"
+                                        }
+                                    />
+                                    <div
+                                        style={{
+                                            paddingTop: 10,
+                                            paddingBottom: 10,
+                                        }}
+                                    >
+                                        <p>{cart.product.name}</p>
+                                    </div>
                                 </Col>
-                                <Col lg={1} className="cart-delete">
+                                <Col
+                                    style={{
+                                        display: "flex",
+                                        alignSelf: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <Form>
+                                        <Form.Control
+                                            className="cart-qty"
+                                            size="sm"
+                                            type="number"
+                                            min={1}
+                                            defaultValue={cart.qty}
+                                            onChange={(e) =>
+                                                onQtyChange(idx, e.target.value)
+                                            }
+                                        ></Form.Control>
+                                    </Form>
+                                    <p
+                                        style={{
+                                            marginLeft: 15,
+                                            marginBottom: 0,
+                                            alignSelf: "center",
+                                        }}
+                                    >
+                                        {cart.product.price}{" "}
+                                        {cfg.currency_symbol}
+                                    </p>
+                                </Col>
+                                <Col
+                                    lg={1}
+                                    md={1}
+                                    xs={1}
+                                    style={{ alignSelf: "center", padding: 10 }}
+                                >
                                     <Button
                                         variant="outline-danger"
                                         size="sm"
@@ -237,8 +239,7 @@ function Cart() {
                                     {cartList.reduce(
                                         (a, b) => (a = a + b.price * b.qty),
                                         0
-                                    )}
-                                    {" "}
+                                    )}{" "}
                                     {cfg.currency_symbol}
                                 </label>
                             </Card.Text>

@@ -4,7 +4,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { Col, Form, Row, Button, Accordion, Badge } from "react-bootstrap";
 
 function OrderSummary() {
-    const [startDate, setstartDate] = useState(moment().format("YYYY-MM-DD"));
+    const [startDate, setstartDate] = useState(moment().format("YYYY-MM-01"));
     const [endDate, setendDate] = useState(
         moment().add(1, "day").format("YYYY-MM-DD")
     );
@@ -71,7 +71,7 @@ function OrderSummary() {
                         size="lg"
                         onClick={() => viewData("export")}
                     >
-                        Export
+                        ส่งออก
                     </Button>
                 </Col>
             </Row>
@@ -79,13 +79,11 @@ function OrderSummary() {
             {orderList.length > 0 ? (
                 <Accordion defaultActiveKey="0" flush>
                     {vendorList.map((vend, idx) => (
-                        <Accordion.Item
-                            key={idx}
-                            eventKey={idx}
-                        >
+                        <Accordion.Item key={idx} eventKey={idx}>
                             <Accordion.Header>
-                                {vend.name}{" "}
+                                {vend.name}
                                 <Badge
+                                    style={{ marginLeft: 3 }}
                                     pill
                                     bg={
                                         orderList.filter(

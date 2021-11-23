@@ -176,7 +176,7 @@ function AdminProductDetail(props) {
                     </Col>
                 </Form.Group>
 
-                <Form.Group as={Row}>
+                <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="2">
                         ร้านค้า:
                     </Form.Label>
@@ -184,11 +184,6 @@ function AdminProductDetail(props) {
                         <Form.Select
                             onChange={(e) => setprodVend(e.target.value)}
                         >
-                            <option value={prodVend}>
-                                {vendList
-                                    .filter((vend) => vend.id === prodVend)
-                                    .map((vend) => vend.name)}
-                            </option>
                             {vendList.map((vend, idx) => (
                                 <option key={idx} value={vend.id}>
                                     {vend.name}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
+import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function AdminProduct() {
@@ -50,7 +51,13 @@ function AdminProduct() {
     return (
         <div>
             <h4 className="topic">จัดการสินค้า</h4>
-
+            <div style={{ display: "flex", justifyContent: "end" }}>
+                <Link to={{ pathname: "/admin/product-create" }}>
+                    <Button variant="success" size="sm">
+                        <FaPlus /> เพิ่มสินค้า
+                    </Button>
+                </Link>
+            </div>
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>

@@ -36,10 +36,13 @@ import OrderSummary from "../Admin/AdminOrder/OrderSummary";
 import AdminVendor from "../Admin/AdminVendor/AdminVendor";
 import AdminVendorDetail from "../Admin/AdminVendor/AdminVendorDetail";
 import AdminVendorCreate from "../Admin/AdminVendor/AdminVendorCreate";
+import axios from "axios";
+import AdminProductCreate from "../Admin/AdminProduct/AdminProductCreate";
 
 function App() {
     const [userName, setuserName] = useState("");
     const [userId, setuserId] = useState(null);
+    const [cartCount, setcartCount] = useState(0);
     const [isAdmin, setisAdmin] = useState(false);
 
     useEffect(async () => {
@@ -54,13 +57,26 @@ function App() {
         });
     }, [userName]);
 
+    useEffect(async () => {
+        await axios.get("/api/getcart").then((res) => {
+            // console.log('cart: ' + res.data.length);
+            setcartCount(res.data.length);
+        });
+    }, [cartCount]);
+
     if (!userName) {
         return <Login setuserName={setuserName} />;
     }
 
     return (
         <Router>
-            <AuthContext.Provider value={{ userId: userId }}>
+            <AuthContext.Provider
+                value={{
+                    userId: userId,
+                    cartCount: cartCount,
+                    setcartCount: setcartCount,
+                }}
+            >
                 <ConfigContext.Provider value={{ currency_symbol: "บาท" }}>
                     <DeptContext.Provider value={departments}>
                         {isAdmin ? (
@@ -102,6 +118,10 @@ function App() {
                                             <Route
                                                 path="/admin/product"
                                                 component={AdminProduct}
+                                            />
+                                            <Route
+                                                path="/admin/product-create"
+                                                component={AdminProductCreate}
                                             />
                                             <Route
                                                 path="/admin/product-detail"

@@ -32,9 +32,22 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        Product::create([
+            'category_id' => $request->category_id,
+            'vendor_id' => $request->vendor_id,
+            'product_code' => $request->product_code,
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'qty' => $request->qty,
+            'active' => $request->active,
+        ]);
+
+        return response()->json([
+            'message' => 'เพิ่มสินค้าสำเร็จ'
+        ]);
     }
 
     /**

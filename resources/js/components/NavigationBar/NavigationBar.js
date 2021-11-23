@@ -12,16 +12,9 @@ import { IoLogOutSharp } from "react-icons/io5";
 
 function NavigationBar(props) {
     const [redirect, setredirect] = useState(false);
-    const [cartCount, setcartCount] = useState(0);
 
     const userId = useContext(AuthContext);
-
-    useEffect(async () => {
-        await axios.get("/api/getcart").then((res) => {
-            // console.log(res.data.length);
-            setcartCount(res.data.length);
-        });
-    }, [userId]);
+    const cartContext = useContext(AuthContext);
 
     async function onLogout() {
         await axios.post("/api/logout");
@@ -54,8 +47,8 @@ function NavigationBar(props) {
                         <Nav>
                             <Nav.Link href="/shop/cart">
                                 รถเข็น{" "}
-                                {cartCount > 0 ? (
-                                    <Badge bg="danger">{cartCount}</Badge>
+                                {cartContext.cartCount > 0 ? (
+                                    <Badge bg="danger">{cartContext.cartCount}</Badge>
                                 ) : null}
                             </Nav.Link>
                             <NavDropdown

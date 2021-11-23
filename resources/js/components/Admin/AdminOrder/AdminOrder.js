@@ -19,7 +19,7 @@ function AdminOrder() {
     const [orderList, setorderList] = useState([]);
     const [orderStatus, setorderStatus] = useState("สั่งซื้อ");
     const [orderMonthList, setorderMonthList] = useState([]);
-    const [startDate, setstartDate] = useState(moment().format("YYYY-MM-DD"));
+    const [startDate, setstartDate] = useState(moment().format("YYYY-MM-01"));
     const [endDate, setendDate] = useState(
         moment().add(1, "day").format("YYYY-MM-DD")
     );
@@ -100,7 +100,9 @@ function AdminOrder() {
                                     }}
                                 >
                                     <div>
-                                        <h6>{stat}</h6>
+                                        <h6>
+                                            <strong>{stat}</strong>
+                                        </h6>
                                         <p>
                                             <strong>
                                                 {
@@ -210,9 +212,9 @@ function AdminOrder() {
                                     </Alert>
                                 ) : null}
                                 <label>
-                                    <strong>พบข้อมูล : </strong>{" "}
-                                    {orderMonthList.length}{" "}
-                                    <strong>รายการ.</strong>
+                                    พบข้อมูล :{" "}
+                                    <strong>{orderMonthList.length}</strong>{" "}
+                                    รายการ.
                                 </label>
                             </div>
                             <Table striped bordered hover>

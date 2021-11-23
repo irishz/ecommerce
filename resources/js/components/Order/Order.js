@@ -21,7 +21,7 @@ function Order() {
 
     return (
         <Container>
-            <Table striped bordered hover>
+            <Table striped bordered hover responsive>
                 <thead>
                     <tr>
                         <th>เลขคำสั่งซื้อ</th>

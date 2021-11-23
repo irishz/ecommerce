@@ -1,4 +1,4 @@
-.cart-row{
+.cart-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -10,29 +10,37 @@
     padding: 10px;
 }
 
-.cart-delete{
+.cart-delete {
     display: flex;
     align-items: center;
 }
 
-.summary{
+.summary {
     height: auto;
     max-height: 100%;
 }
 
-.cart-total{
+.cart-total {
     text-align: end;
     font-size: 20px;
     font-weight: bolder;
     margin-right: 10px;
 }
 
-.cart-qty{
+.cart-qty {
     text-align: center;
     background-color: #fff;
     width: 5rem;
 }
 
-.alert-success{
+.alert-success {
     width: auto;
+}
+
+.cart-btn {
+    height: 30px;
+    width: 30px;
+    border-radius: 100;
+    align-items: center;
+    justify-content: center;
 }
