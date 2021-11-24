@@ -14,7 +14,7 @@ function OrderProduct(props) {
     const cfg = useContext(ConfigContext);
 
     useEffect(async () => {
-        console.log(props.location.state.total);
+        // console.log(props.location.state.total);
         setorderId(props.location.state.order_id);
 
         if (orderId) {
@@ -85,11 +85,13 @@ function OrderProduct(props) {
                 </Col>
             </Row>
 
-            <Table striped bordered hover sm responsive>
+            <Table striped bordered hover responsive>
                 <thead>
                     <tr>
                         <th>รหัสสินค้า</th>
                         <th>สินค้า</th>
+                        <th>จำนวน</th>
+                        <th>หน่วย</th>
                         <th>ราคา</th>
                         <th>ทั้งหมด</th>
                         <th>สถานะ</th>
@@ -97,11 +99,11 @@ function OrderProduct(props) {
                 </thead>
                 <tbody>
                     {orderProdList.map((order, idx) => (
-                        <tr key={idx}>
+                        <tr key={idx} style={{ whiteSpace: 'nowrap' }} className={order.status === 'ปกติ' ? 'normal': 'unnormal'}>
                             <td>{order.product.product_code}</td>
-                            <td>
-                                {order.product.name} x{order.qty}
-                            </td>
+                            <td>{order.product.name}</td>
+                            <td>{order.qty}</td>
+                            <td>{order.product.unit}</td>
                             <td>{order.product.price}</td>
                             <td>{order.qty * order.product.price}</td>
                             <td>{order.status}</td>
@@ -109,20 +111,26 @@ function OrderProduct(props) {
                     ))}
                 </tbody>
             </Table>
-            <div className="order-total">
-                <label>
-                    วันที่สั่งซื้อ:{" "}
-                    <strong>{moment(props.location.state.createdAt)
-                        .locale("th")
-                        .format("LLL")}</strong>
-                </label>
-                <label>
-                    <strong>
-                        รวมทั้งหมด: {props.location.state.total}{" "}
-                        {cfg.currency_symbol}
-                    </strong>
-                </label>
-            </div>
+            <Row className="order-total">
+                <Col lg={6} md={6} xs={12}>
+                    <label>
+                        วันที่สั่งซื้อ:{" "}
+                        <strong>
+                            {moment(props.location.state.createdAt)
+                                .locale("th")
+                                .format("LLL")}
+                        </strong>
+                    </label>
+                </Col>
+                <Col lg={6} md={6} xs={12} style={{ textAlign: "end" }}>
+                    <label>
+                        <strong>
+                            รวมทั้งหมด: {props.location.state.total}{" "}
+                            {cfg.currency_symbol}
+                        </strong>
+                    </label>
+                </Col>
+            </Row>
             <div className="backto-order">
                 <Link to="/shop/order">
                     <Button variant="primary">กลับสู่หน้าคำสั่งซื้อ</Button>

@@ -50,6 +50,10 @@ function Cart() {
     }
 
     function onQtyChange(cart_idx, qty) {
+        if (qty === "" || qty === null) {
+            qty = 1;
+        }
+        console.log(qty);
         setbtnSaveDisable(false);
         let newCart = cartList;
 
@@ -77,6 +81,10 @@ function Cart() {
     }
 
     function onCheckout() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
         // console.log(cartList);
         axios.post("/api/order", cartList).then((res) => {
             console.log(res.data.message);
@@ -126,7 +134,7 @@ function Cart() {
                                     borderRadius: 5,
                                 }}
                             >
-                                <Col className="d-flex">
+                                <Col xs={3} sm={2} md={2} className="hidden-xs">
                                     <img
                                         style={{
                                             width: 70,
@@ -142,13 +150,24 @@ function Cart() {
                                             ".jpg"
                                         }
                                     />
+                                </Col>
+                                <Col xs={9} sm={4} md={4} className="d-flex">
                                     <div
                                         style={{
                                             paddingTop: 10,
                                             paddingBottom: 10,
                                         }}
                                     >
-                                        <p>{cart.product.name}</p>
+                                        <strong>{cart.product.name}</strong>
+                                        <p
+                                            style={{
+                                                marginBottom: 0,
+                                                alignSelf: "center",
+                                            }}
+                                        >
+                                            {cart.product.price}{" "}
+                                            {cfg.currency_symbol}
+                                        </p>
                                     </div>
                                 </Col>
                                 <Col
@@ -158,7 +177,13 @@ function Cart() {
                                         justifyContent: "center",
                                     }}
                                 >
-                                    <Form>
+                                    <Form
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
                                         <Form.Control
                                             className="cart-qty"
                                             size="sm"
@@ -169,23 +194,26 @@ function Cart() {
                                                 onQtyChange(idx, e.target.value)
                                             }
                                         ></Form.Control>
+                                        <p
+                                            style={{
+                                                marginLeft: 5,
+                                                marginBottom: 0,
+                                            }}
+                                        >
+                                            {cart.product.unit}
+                                        </p>
                                     </Form>
-                                    <p
-                                        style={{
-                                            marginLeft: 15,
-                                            marginBottom: 0,
-                                            alignSelf: "center",
-                                        }}
-                                    >
-                                        {cart.product.price}{" "}
-                                        {cfg.currency_symbol}
-                                    </p>
                                 </Col>
                                 <Col
                                     lg={1}
                                     md={1}
                                     xs={1}
-                                    style={{ alignSelf: "center", padding: 10 }}
+                                    style={{
+                                        display: "flex",
+                                        alignSelf: "center",
+                                        padding: 10,
+                                        justifyContent: "end",
+                                    }}
                                 >
                                     <Button
                                         variant="outline-danger"

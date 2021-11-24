@@ -33,7 +33,7 @@ function Order() {
                 </thead>
                 <tbody>
                     {orderList
-                        .sort((a, b) => b.created_at - a.created_at)
+                        .reverse((order) => order.created_at)
                         .map((order, idx) => (
                             <tr key={idx}>
                                 <td>{"#" + order.id}</td>
