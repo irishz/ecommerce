@@ -85,6 +85,7 @@ function AdminProduct() {
                                                 description: prod.description,
                                                 product_code: prod.product_code,
                                                 price: prod.price,
+                                                unit: prod.unit,
                                                 qty: prod.qty,
                                                 category_id: prod.category_id,
                                                 active: prod.active,

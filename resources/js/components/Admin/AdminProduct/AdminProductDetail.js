@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Form, Button, Row, Col, Figure } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router";
+import Swal from "sweetalert2";
 
 function AdminProductDetail(props) {
     const prodData = useLocation();
@@ -14,6 +15,7 @@ function AdminProductDetail(props) {
     );
     const [prodActive, setprodActive] = useState(prodData.state.active);
     const [prodPrice, setprodPrice] = useState(prodData.state.price);
+    const [prodUnit, setprodUnit] = useState(prodData.state.unit);
     const [prodVend, setprodVend] = useState(prodData.state.vendor_id);
     const [prodCategory, setprodCategory] = useState(
         prodData.state.category_id
@@ -23,7 +25,6 @@ function AdminProductDetail(props) {
     const [prodImageURL, setprodImageURL] = useState(
         "/products/" + prodData.state.id + "/" + prodData.state.name + ".jpg"
     );
-    const [alertUpdate, setalertUpdate] = useState("");
 
     useLayoutEffect(() => {
         axios.get("/api/vendors").then((res) => {
@@ -66,6 +67,7 @@ function AdminProductDetail(props) {
             description: prodDescription,
             active: productActive,
             price: prodPrice,
+            unit: prodUnit,
             category_id: prodCategory,
             vendor_id: prodVend,
         };
@@ -80,7 +82,13 @@ function AdminProductDetail(props) {
         axios
             .put("/api/product/update/" + prodData.state.id, prodObj)
             .then((res) => {
-                setalertUpdate(res.data.message);
+                Swal.fire({
+                    title: "อัพเดทสำเร็จ!",
+                    text: res.data.message,
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
             });
     }
 
@@ -129,11 +137,21 @@ function AdminProductDetail(props) {
                     <Form.Label column sm="2">
                         รายละเอียด:
                     </Form.Label>
-                    <Col sm="10">
+                    <Col sm="6">
                         <Form.Control
                             type="text"
                             value={prodDescription}
                             onChange={(e) => setprodDescription(e.target.value)}
+                        />
+                    </Col>
+                    <Form.Label column sm="2">
+                        หน่วย:
+                    </Form.Label>
+                    <Col sm="2">
+                        <Form.Control
+                            type="text"
+                            value={prodUnit}
+                            onChange={(e) => setprodUnit(e.target.value)}
                         />
                     </Col>
                 </Form.Group>
@@ -151,7 +169,7 @@ function AdminProductDetail(props) {
                         />
                     </Col>
                     <Form.Label column sm="1">
-                        Active:
+                        ใช้งาน:
                     </Form.Label>
                     <Col sm="2">
                         <Form.Check

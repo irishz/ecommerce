@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->double('price');
+            $table->string('unit');
             $table->integer('qty')->nullable();
             $table->string('active')->nullable();
             $table->timestamps();

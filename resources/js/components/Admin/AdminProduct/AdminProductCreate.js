@@ -10,6 +10,7 @@ function AdminProductCreate() {
     const [prodCategory, setprodCategory] = useState(1);
     const [prodDescription, setprodDescription] = useState("");
     const [prodPrice, setprodPrice] = useState(0);
+    const [prodUnit, setprodUnit] = useState("");
     const [prodVend, setprodVend] = useState("");
     const [prodImage, setprodImage] = useState([]);
     const [prodImageData, setprodImageData] = useState(null);
@@ -52,6 +53,7 @@ function AdminProductCreate() {
             name: prodName,
             description: prodDescription,
             price: prodPrice,
+            unit: prodUnit,
             qty: 0,
             active: 1,
         };
@@ -114,11 +116,21 @@ function AdminProductCreate() {
                     <Form.Label column sm="2">
                         รายละเอียด:
                     </Form.Label>
-                    <Col sm="10">
+                    <Col sm="6">
                         <Form.Control
                             type="text"
                             value={prodDescription}
                             onChange={(e) => setprodDescription(e.target.value)}
+                        />
+                    </Col>
+                    <Form.Label column sm="2">
+                        หน่วย:
+                    </Form.Label>
+                    <Col sm="2">
+                        <Form.Control
+                            type="text"
+                            value={prodUnit}
+                            onChange={(e) => setprodUnit(e.target.value)}
                         />
                     </Col>
                 </Form.Group>
