@@ -33,7 +33,7 @@ function Cart() {
             // console.log(res.data);
             setcartList(res.data);
         });
-    }, [userId, alertCartDelete]);
+    }, [userId, alertCartDelete, alertCreateOrder]);
 
     function onCartDelete(cart_id) {
         axios.delete("/api/cart/delete/" + cart_id).then((res) => {
@@ -84,11 +84,19 @@ function Cart() {
         window.scrollTo({
             top: 0,
             behavior: "smooth",
-        })
+        });
         // console.log(cartList);
         axios.post("/api/order", cartList).then((res) => {
             console.log(res.data.message);
             setalertCreateOrder(res.data.message);
+            Swal.fire({
+                title: "สำเร็จ!",
+                html:
+                    res.data.message +
+                    ', <a href="/shop/order">ดูคำสั่งซื้อของคุณ.</a>',
+                icon: "success",
+                confirmButtonText: "ปิด",
+            });
         });
     }
 

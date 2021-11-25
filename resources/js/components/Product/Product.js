@@ -40,7 +40,7 @@ function Product() {
             // console.log(res.data);
             setcategoryList(res.data);
         });
-    }, [onSearch]);
+    }, []);
 
     useEffect(() => {
         fetchProducts();
@@ -178,7 +178,7 @@ function Product() {
                         cursor: "pointer",
                     }}
                     className="go-top"
-                    size={28}
+                    size={36}
                     color="#3936f7"
                     onClick={() =>
                         window.scrollTo({
