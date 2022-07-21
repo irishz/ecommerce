@@ -20,6 +20,8 @@ package-lock.json
 public/css/app.css
 public/js/app.js
 public/mix-manifest.json
-package-lock.json
-public/mix-manifest.json
-public/js/app.js
+public/node_modules/
+public\css\app.css
+public\js\app.js
+public\mix-manifest.json
+public\node_modules\
