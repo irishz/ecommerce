@@ -25,3 +25,5 @@ public\css\app.css
 public\js\app.js
 public\mix-manifest.json
 public\node_modules\
+public/js/app.js
+public/mix-manifest.json
