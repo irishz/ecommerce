@@ -38,6 +38,7 @@ import AdminVendorDetail from "../Admin/AdminVendor/AdminVendorDetail";
 import AdminVendorCreate from "../Admin/AdminVendor/AdminVendorCreate";
 import axios from "axios";
 import AdminProductCreate from "../Admin/AdminProduct/AdminProductCreate";
+import AdminUserCreate from "../Admin/AdminUser/AdminUserCreate";
 
 function App() {
     const [userName, setuserName] = useState("");
@@ -142,6 +143,10 @@ function App() {
                                             <Route
                                                 path="/admin/user"
                                                 component={AdminUser}
+                                            />
+                                            <Route
+                                                path="/admin/user-create"
+                                                component={AdminUserCreate}
                                             />
                                             <Route
                                                 path="/admin/user-detail"

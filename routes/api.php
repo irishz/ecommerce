@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('user', [AuthController::class, 'user']);
     Route::get('user-all', [AuthController::class, 'userAll']);
     Route::post('logout', [AuthController::class, 'logout']);
+    // Route::post('user/create', [AuthController::class, 'register']);
     Route::put('user/update', [AuthController::class, 'update']);
     Route::put('user/reset-password', [AuthController::class, 'resetPassword']);
     Route::delete('user/delete/{id}', [AuthController::class, 'destroy']);
@@ -75,7 +76,7 @@ Route::middleware('auth:sanctum')->group(function (){
 
     //Invoice
     Route::post('invoice', [InvoiceController::class, 'store']);
-    
+
     //Vendor
     Route::get('vendors', [VendorController::class, 'index']);
     Route::post('vendor/create', [VendorController::class, 'create']);

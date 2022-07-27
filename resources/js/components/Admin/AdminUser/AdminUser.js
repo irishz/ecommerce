@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Col, Row, Table, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { BsPersonPlusFill } from "react-icons/bs";
 
-function AdminUser() {
+function AdminUser(props) {
     const [userList, setuserList] = useState([]);
     const [showModal, setshowModal] = useState(false);
     const [deleteUserId, setdeleteUserId] = useState(null);
     const [alertDeleteMsg, setalertDeleteMsg] = useState("");
+    const [alertCreateSuccess, setalertCreateSuccess] = useState(null);
 
     useEffect(async () => {
         axios.get("/api/user-all").then((res) => {
@@ -15,6 +17,17 @@ function AdminUser() {
             setuserList(res.data);
         });
     }, [alertDeleteMsg]);
+
+    useEffect(() => {
+        setalertCreateSuccess(props.alertCreateSuccess);
+        setTimeout(() => {
+            setalertCreateSuccess(null);
+        }, 3000);
+
+        return () => {
+            setalertCreateSuccess(null);
+        };
+    }, [props.alertCreateSuccess]);
 
     function onDeleteClick(user_id) {
         setshowModal(true);
@@ -34,7 +47,16 @@ function AdminUser() {
 
     return (
         <div>
-            <h4 className="topic">จัดการผู้ใช้</h4>
+            <div className="topic d-flex pb-2 justify-content-between">
+                <h4 className="align-self-center mb-0 text-bold">
+                    จัดการผู้ใช้
+                </h4>
+                <Link to={{ pathname: "/admin/user-create" }}>
+                    <Button variant="success">
+                        <BsPersonPlusFill /> เพิ่มผู้ใช้
+                    </Button>
+                </Link>
+            </div>
 
             <Row>
                 <Col>
@@ -105,7 +127,7 @@ function AdminUser() {
                 </Col>
             </Row>
 
-            <Modal show={showModal}>
+            <Modal centered show={showModal}>
                 <Modal.Header>ยืนยันการทำรายการ</Modal.Header>
                 <Modal.Body>
                     {alertDeleteMsg.length > 0
@@ -131,6 +153,10 @@ function AdminUser() {
                         ยกเลิก
                     </Button>
                 </Modal.Footer>
+            </Modal>
+
+            <Modal centered show={alertCreateSuccess ? true : false}>
+                <Modal.Body>{alertCreateSuccess}</Modal.Body>
             </Modal>
         </div>
     );

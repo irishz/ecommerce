@@ -25,14 +25,36 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->email),
-            'is_admin' => 0,
-        ]);
+        if (User::where('employee_code', '=', $request->employeeCode)->exists()) {
+            return response([
+                'message' => 'รหัสพนักงานนี้มีในระบบอยู่แล้ว'
+            ]);
+        } else {
+            // dd($request);
+            // $user = new User;
 
-        return $user;
+            // $user->employee_code = $request->employeeCode;
+            // $user->first_name = $request->firstName;
+            // $user->last_name = $request->lastName;
+            // $user->department = $request->department;
+            // $user->password = Hash::make($request->password);
+            // $user->is_admin = $request->isAdmin;
+
+            // $user->save();
+            $user = User::create([
+                'employee_code' => $request->employeeCode,
+                'first_name' => $request->firstName,
+                'last_name' => $request->lastName,
+                'department' => $request->department,
+                'password' => Hash::make($request->password),
+                'is_admin' => $request->isAdmin, //isAdmin default = 0
+            ]);
+
+            return response([
+                'message' => 'สร้างผู้ใช้สำเร็จ',
+                // 'user' => $user,
+            ]);
+        }
     }
 
     public function login(Request $request)
@@ -74,7 +96,7 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->department = $request->department;
         $user->is_admin = $request->is_admin;
-        
+
         $user->save();
 
         return response()->json([
@@ -86,7 +108,7 @@ class AuthController extends Controller
     {
         $user = User::find($request->id);
 
-        
+
         $user->password = Hash::make($request->newPassword);
         $user->save();
 
